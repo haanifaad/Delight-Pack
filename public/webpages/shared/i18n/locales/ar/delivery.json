@@ -1,0 +1,31 @@
+{
+  "pageTitle": "تتبع التسليم",
+  "pageDescription": "حالة الطلب المباشرة — تتحدث تلقائياً مع كل مرحلة.",
+  "loadingOrders": "جاري تحميل الطلبات…",
+  "noOrders": "لا توجد طلبات في قائمة التتبع.",
+  "selectOrder": "اختر طلباً لعرض التتبع المباشر.",
+  "trackingTitle": "طلب",
+  "loadError": "تعذر تحميل بيانات التتبع",
+  "orderNotFound": "الطلب غير موجود.",
+  "deliveredMessage": "تم تسليم طلبك. شكراً لاختيارك Delight Pack!",
+  "currentStep": "المرحلة الحالية",
+  "liveDelivery": "تسليم مباشر",
+  "driver": "السائق",
+  "mapPlaceholder": "الخريطة المباشرة — قريباً",
+  "estimatedArrival": "الوصول المتوقع",
+  "etaPending": "جاري تحديث وقت الوصول…",
+  "steps": {
+    "order_placed": "تم الطلب",
+    "printing": "الطباعة",
+    "quality_check": "فحص الجودة",
+    "out_for_delivery": "في الطريق",
+    "delivered": "تم التسليم"
+  },
+  "status": {
+    "order_placed": "تم الطلب",
+    "printing": "الطباعة",
+    "quality_check": "فحص الجودة",
+    "out_for_delivery": "في الطريق",
+    "delivered": "تم التسليم"
+  }
+}

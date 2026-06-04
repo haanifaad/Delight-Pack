@@ -1,0 +1,15 @@
+{
+  "gatewayTitle": "بوابة تالي",
+  "masters": "السجلات الرئيسية",
+  "transactionsSection": "المعاملات",
+  "reportsSection": "التقارير",
+  "currentPeriod": "الفترة الحالية",
+  "currentDate": "التاريخ الحالي",
+  "companyName": "اسم الشركة",
+  "lastEntry": "تاريخ آخر إدخال",
+  "voucherCreation": "إنشاء قسيمة محاسبية",
+  "dayBook": "دفتر اليوم",
+  "escBack": "Esc: رجوع",
+  "noTransactions": "لم يتم العثور على معاملات.",
+  "quitConfirm": "هل تريد الخروج من تالي؟"
+}

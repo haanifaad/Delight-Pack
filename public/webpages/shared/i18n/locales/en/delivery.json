@@ -1,0 +1,31 @@
+{
+  "pageTitle": "Delivery Tracking",
+  "pageDescription": "Live order fulfillment status — updates automatically as your team progresses each stage.",
+  "loadingOrders": "Loading orders…",
+  "noOrders": "No orders in the tracking queue. Orders synced from your backend will appear here.",
+  "selectOrder": "Select an order to view live tracking.",
+  "trackingTitle": "Order",
+  "loadError": "Could not load tracking data",
+  "orderNotFound": "Order not found. Check the order ID or wait for sync from your backend.",
+  "deliveredMessage": "Your order has been delivered. Thank you for choosing Delight Pack!",
+  "currentStep": "Current step",
+  "liveDelivery": "Live delivery",
+  "driver": "Driver",
+  "mapPlaceholder": "Live map — integration coming soon",
+  "estimatedArrival": "Estimated arrival",
+  "etaPending": "ETA updating…",
+  "steps": {
+    "order_placed": "Order Placed",
+    "printing": "Printing",
+    "quality_check": "Quality Check",
+    "out_for_delivery": "Out for Delivery",
+    "delivered": "Delivered"
+  },
+  "status": {
+    "order_placed": "Order Placed",
+    "printing": "Printing",
+    "quality_check": "Quality Check",
+    "out_for_delivery": "Out for Delivery",
+    "delivered": "Delivered"
+  }
+}

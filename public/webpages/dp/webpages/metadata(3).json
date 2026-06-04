@@ -1,0 +1,6 @@
+{
+  "name": "EcoPack Blog",
+  "description": "An SEO-optimized blog and news section focusing on eco-friendly packaging and trends.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

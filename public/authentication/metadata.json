@@ -1,0 +1,6 @@
+{
+  "name": "DP AUTHENTICATION",
+  "description": "A premium software access gateway featuring Google Sign-In, dynamic member allowlists, approval queues, and detailed auth logs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

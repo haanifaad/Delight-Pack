@@ -1,0 +1,6 @@
+{
+  "name": "Supply Chain Predictor",
+  "description": "Background worker and dashboard that analyzes seasonal sales data via Gemini API to predict required raw material stock.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

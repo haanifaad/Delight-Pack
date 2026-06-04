@@ -1,0 +1,15 @@
+{
+  "gatewayTitle": "ടാലി ഗേറ്റ്വേ",
+  "masters": "മാസ്റ്റേഴ്സ്",
+  "transactionsSection": "ഇടപാടുകൾ",
+  "reportsSection": "റിപ്പോർട്ടുകൾ",
+  "currentPeriod": "നിലവിലെ കാലയളവ്",
+  "currentDate": "നിലവിലെ തീയതി",
+  "companyName": "കമ്പനിയുടെ പേര്",
+  "lastEntry": "അവസാന എൻട്രി തീയതി",
+  "voucherCreation": "അക്കൗണ്ടിംഗ് വൗച്ചർ സൃഷ്ടി",
+  "dayBook": "ഡേ ബുക്ക്",
+  "escBack": "Esc: പിന്നോട്ട്",
+  "noTransactions": "ഇടപാടുകളൊന്നും കണ്ടെത്തിയില്ല.",
+  "quitConfirm": "ടാലിയിൽ നിന്ന് പുറത്തുകടക്കണോ?"
+}

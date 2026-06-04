@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  
+  --color-secondary: var(--secondary);
+  --color-success: #00e676; /* Vibrant green */
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --font-sans: 'Outfit', sans-serif;
+  --border-width-thick: 4px;
+}
+
+:root, [data-theme="dp"] {
+  /* Premium DP Mode (Blue/Red on White Glass/Sleek background) */
+  --primary: #1D4ED8; /* DP Logo Blue */
+  --primary-light: #3b82f6;
+  --primary-dark: #1e3a8a;
+  
+  --secondary: #E11D48; /* DP Logo Red */
+  
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-hover: #f1f5f9;
+  --border: #e2e8f0;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  
+  color-scheme: light;
+}
+
+[data-theme="light"] {
+  /* Minimalist Light Mode */
+  --primary: #0f172a;
+  --primary-light: #334155;
+  --primary-dark: #020617;
+  
+  --secondary: #475569;
+  
+  --background: #ffffff;
+  --foreground: #1e293b;
+  --card: #f8fafc;
+  --card-hover: #f1f5f9;
+  --border: #cbd5e1;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  /* Deep Retail Dark Mode */
+  --primary: #3b82f6; 
+  --primary-light: #60a5fa;
+  --primary-dark: #2563eb;
+  
+  --secondary: #f43f5e;
+  
+  --background: #121212;
+  --foreground: #f8fafc;
+  --card: #0a0a0a;
+  --card-hover: #111111;
+  --border: #1c1c1c;
+  --muted: #1c1c1c;
+  --muted-foreground: #94a3b8;
+  
+  color-scheme: dark;
+}
+
+html, body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Thick borders everywhere for that bold retail look */
+* {
+  border-color: var(--color-border);
+  box-sizing: border-box;
+}
+
+/* Custom High-Contrast Focus States */
+*:focus {
+  outline: none !important;
+}
+
+*:focus-visible {
+  outline: 4px solid var(--color-primary) !important;
+  outline-offset: 2px !important;
+  border-radius: 2px;
+}
+
+/* Utility classes for retail buttons */
+@layer components {
+  .btn-retail {
+    @apply inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-black text-xl tracking-wide uppercase border-4 border-transparent hover:bg-primary-light hover:border-foreground transition-all active:scale-95;
+  }
+}

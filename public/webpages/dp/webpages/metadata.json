@@ -1,0 +1,6 @@
+{
+  "name": "Nexus Depository Portal",
+  "description": "A high-end B2B customer portal dashboard featuring order tracking, invoice history, and recent activity monitoring.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

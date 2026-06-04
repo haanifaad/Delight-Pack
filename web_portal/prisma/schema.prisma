@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  password_hash String
+  role_level    Int           @default(1)
+  orders        Order[]
+  ledgerEntries LedgerEntry[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Order {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  totalAmount Float
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model LedgerEntry {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  amount      Float
+  type        String
+  description String
+  createdAt   DateTime @default(now())
+}
+
+model InventoryItem {
+  id            String   @id @default(uuid())
+  category      String   // 'Raw Materials', 'Printed Boxes', 'Ink', 'Spare Parts'
+  name          String
+  quantity      Int      @default(0)
+  batches       InventoryBatch[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model InventoryBatch {
+  id            String   @id @default(uuid())
+  batch_id      String   @unique
+  itemId        String
+  item          InventoryItem @relation(fields: [itemId], references: [id])
+  material_type String
+  supplier_id   String
+  arrival_date  DateTime
+  quantity      Int
+  createdAt     DateTime @default(now())
+}
+
+model Supplier {
+  id                String   @id @default(uuid())
+  name              String
+  materialCategory  String
+  averageLeadTime   Int      // in days
+  activeContracts   Int
+  meetingSLA        Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Employee {
+  id                String   @id @default(uuid())
+  name              String
+  baseSalary        Float
+  createdAt         DateTime @default(now())
+  attendanceRecords AttendanceRecord[]
+}
+
+model AttendanceRecord {
+  id          String   @id @default(uuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  date        DateTime
+  status      String   // 'PRESENT', 'ABSENT', 'LATE'
+  createdAt   DateTime @default(now())
+}
+
+model AdminAlert {
+  id          String   @id @default(uuid())
+  severity    String   // 'WARNING', 'ERROR'
+  message     String
+  resolved    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model DemandPrediction {
+  id                String   @id @default(uuid())
+  predicted_month   String
+  confidence_score  Float
+  raw_material_reqs Json
+  reasoning         String
+  createdAt         DateTime @default(now())
+}

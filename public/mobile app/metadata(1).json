@@ -1,0 +1,6 @@
+{
+  "name": "Order Status Monitor",
+  "description": "Backend service simulating production material deduction from inventory.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
