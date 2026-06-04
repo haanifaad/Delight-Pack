@@ -1,0 +1,37 @@
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+
+type SupportChatContextValue = {
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
+};
+
+const SupportChatContext = createContext<SupportChatContextValue | null>(null);
+
+export function SupportChatProvider({ children }: { children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => setIsOpen(false), []);
+  const toggle = useCallback(() => setIsOpen((prev) => !prev), []);
+
+  const value = useMemo(
+    () => ({ isOpen, open, close, toggle }),
+    [isOpen, open, close, toggle],
+  );
+
+  return (
+    <SupportChatContext.Provider value={value}>
+      {children}
+    </SupportChatContext.Provider>
+  );
+}
+
+export function useSupportChat() {
+  const context = useContext(SupportChatContext);
+  if (!context) {
+    throw new Error('useSupportChat must be used within SupportChatProvider');
+  }
+  return context;
+}

@@ -1,0 +1,13 @@
+{
+  "mainNavigation": "Main Navigation",
+  "reports": "Reports",
+  "overview": "Overview",
+  "transactions": "Transactions",
+  "spreadsheet": "Spreadsheet",
+  "products": "Products",
+  "deliveries": "Delivery Tracking",
+  "profitAnalysis": "Profit Analysis",
+  "metrics": "Metrics",
+  "primeLedger": "PrimeLedger",
+  "ledgerFlow": "LedgerFlow AI"
+}

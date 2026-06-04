@@ -1,0 +1,15 @@
+{
+  "gatewayTitle": "Gateway of Tally",
+  "masters": "Masters",
+  "transactionsSection": "Transactions",
+  "reportsSection": "Reports",
+  "currentPeriod": "Current Period",
+  "currentDate": "Current Date",
+  "companyName": "Name of Company",
+  "lastEntry": "Date of Last Entry",
+  "voucherCreation": "Accounting Voucher Creation",
+  "dayBook": "Day Book",
+  "escBack": "Esc: Back",
+  "noTransactions": "No transactions found.",
+  "quitConfirm": "Quit Tally?"
+}

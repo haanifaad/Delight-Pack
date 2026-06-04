@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateway of Tally</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="js/tally-keyboard.js"></script>
+    <style>
+        /* Tally Prime selection & hotkey styling */
+        .tally-selected {
+            background-color: #f8e58c !important;
+            color: #1a1a1a !important;
+        }
+        .tally-hotkey {
+            font-weight: bold;
+            color: #dc3545;
+        }
+        .tally-menu-item {
+            padding: 0.25rem 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+        .tally-menu-item:not(.tally-selected):hover {
+            background-color: #f9fafb;
+        }
+        .tally-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        .tally-modal {
+            background: #fff;
+            border: 2px solid #8ab6b6;
+            min-width: 22rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        .tally-modal-header {
+            background: #005a5a;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+        .tally-modal-body {
+            padding: 1rem;
+        }
+        .tally-modal-body label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #005a5a;
+            margin-bottom: 0.25rem;
+        }
+        .tally-modal-body input {
+            width: 100%;
+            border: 1px solid #8ab6b6;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            outline: none;
+        }
+        .tally-modal-body input:focus {
+            background: #f8e58c;
+        }
+        .tally-modal-footer {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+        .tally-fn-key.tally-fn-active {
+            background-color: #dff1f1;
+        }
+    </style>
+        <style type="text/tailwindcss">
+    @theme {
+      --color-primary: var(--primary);
+      --color-primary-light: var(--primary-light);
+      --color-primary-dark: var(--primary-dark);
+      --color-secondary: var(--secondary);
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-card-hover: var(--card-hover);
+      --color-border: var(--border);
+      --color-muted: var(--muted);
+      --color-muted-foreground: var(--muted-foreground);
+      --color-accent: var(--accent);
+      --font-sans: 'Inter', sans-serif;
+    }
+
+    /* DP Mode (Ultra Premium: Obsidian Black + Glassmorphism + DP Auras) */
+    :root, [data-theme="dp"] {
+      --primary: #1D4ED8; 
+      --primary-light: #3b82f6;
+      --primary-dark: #1e3a8a;
+      --secondary: #E11D48;
+      --background: #050505; /* Obsidian Black */
+      --foreground: #fdfdfd;
+      --card: rgba(255, 255, 255, 0.02); /* Glassmorphism Base */
+      --card-hover: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.08); /* Frosted edges */
+      --muted: rgba(255, 255, 255, 0.05); 
+      --muted-foreground: #94a3b8;
+      --accent: #fdfdfd; /* Keep icons clean and white so they pop against the glows */
+      color-scheme: dark;
+    }
+
+    /* Light Mode (Clean editorial white) */
+    [data-theme="light"] {
+      --primary: #0f172a;
+      --primary-light: #334155;
+      --primary-dark: #020617;
+      --secondary: #475569;
+      --background: #ffffff;
+      --foreground: #1e293b;
+      --card: #f8fafc;
+      --card-hover: #f1f5f9;
+      --border: #cbd5e1;
+      --muted: #f1f5f9;
+      --muted-foreground: #64748b;
+      --accent: #0f172a;
+      color-scheme: light;
+    }
+
+    /* Dark Mode (Grayscale, pure black/white) */
+    [data-theme="dark"] {
+      --primary: #ffffff; 
+      --primary-light: #f1f5f9;
+      --primary-dark: #cbd5e1;
+      --secondary: #94a3b8;
+      --background: #000000;
+      --foreground: #ffffff;
+      --card: #0a0a0a;
+      --card-hover: #111111;
+      --border: #1c1c1c;
+      --muted: #1c1c1c;
+      --muted-foreground: #a3a3a3;
+      --accent: #ffffff;
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-sans);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      margin: 0;
+      position: relative;
+    }
+    
+    /* Aura logic */
+    #dp-aura {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    [data-theme="dp"] #dp-aura {
+      display: block;
+    }
+    
+    /* Cinematic Glass Card Hover Glow for DP Mode */
+    [data-theme="dp"] .glass-card {
+      transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    [data-theme="dp"] .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px -10px rgba(29, 78, 216, 0.15), 0 0 30px -10px rgba(225, 29, 72, 0.15);
+    }
+    
+    .icon-accent {
+      color: var(--accent);
+    }
+    
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(1.05); }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 8s ease-in-out infinite;
+    }
+  </style>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    // Initialization script to set theme immediately and prevent flash
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>\n</head>
+<body>
+
+  <!-- Ambient DP Aura Glow (Only visible in DP Mode) -->
+  <!-- Ambient Interactive DP Aura Glow (Only visible in DP Mode) -->
+  <div id="dp-aura">
+    <div id="dp-orb-blue" class="fixed top-0 left-0 w-[600px] h-[600px] -ml-[300px] -mt-[300px] bg-[#1D4ED8] rounded-full mix-blend-screen filter blur-[140px] opacity-30 pointer-events-none" style="transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+    <div id="dp-orb-red" class="fixed top-0 left-0 w-[800px] h-[800px] -ml-[400px] -mt-[400px] bg-[#E11D48] rounded-full mix-blend-screen filter blur-[180px] opacity-20 pointer-events-none" style="transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+  </div>
+  <script>
+    document.addEventListener('mousemove', (e) => {
+      // Only track if DP Mode is active to save performance in other modes
+      if (document.documentElement.getAttribute('data-theme') !== 'dp') return;
+      
+      const blueOrb = document.getElementById('dp-orb-blue');
+      const redOrb = document.getElementById('dp-orb-red');
+      
+      const x = e.clientX;
+      const y = e.clientY;
+      
+      // Blue orb perfectly centers on the mouse
+      if (blueOrb) blueOrb.style.transform = `translate(${x}px, ${y}px)`;
+      
+      // Red orb trails slightly and offsets to create a stunning blended effect
+      if (redOrb) redOrb.style.transform = `translate(${x + 80}px, ${y + 80}px)`;
+    });
+  </script>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useCallback, useRef } = React;
+        const {
+            GATEWAY_MENU,
+            TOP_BAR_SHORTCUTS,
+            FUNCTION_KEYS,
+            isEditableTarget,
+            wrapMenuIndex,
+            findMenuIndexByHotkey,
+            isFunctionKey,
+        } = window.TallyKeyboard;
+
+        /** Render menu label with bold red hotkey letter */
+        function TallyHotkeyLabel({ label, hotkey }) {
+            const idx = label.toLowerCase().indexOf(hotkey.toLowerCase());
+            if (idx === -1) return label;
+            return (
+                <>
+                    {label.slice(0, idx)}
+                    <span className="tally-hotkey">{label[idx]}</span>
+                    {label.slice(idx + 1)}
+                </>
+            );
+        }
+
+        function MenuItem({ item, isActive }) {
+            return (
+                <div
+                    className={`tally-menu-item ${isActive ? 'tally-selected' : ''}`}
+                    data-menu-index={item.index}
+                >
+                    <TallyHotkeyLabel label={item.label} hotkey={item.hotkey} />
+                </div>
+            );
+        }
+
+        /** Date change modal — keyboard: Esc cancel, Enter accept */
+        function DateModal({ currentDate, onSave, onClose }) {
+            const [value, setValue] = useState(currentDate);
+            const inputRef = useRef(null);
+
+            useEffect(() => {
+                inputRef.current?.focus();
+                const handleKeyDown = (e) => {
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        onClose();
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        onSave(value);
+                    }
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [value, onSave, onClose]);
+
+            return (
+                <div className="tally-modal-overlay" data-tally-modal role="dialog" aria-modal="true">
+                    <div className="tally-modal">
+                        <div className="tally-modal-header">Change Current Date (F2)</div>
+                        <div className="tally-modal-body">
+                            <label>Current Date</label>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                            />
+                        </div>
+                        <div className="tally-modal-footer">Enter: Accept · Esc: Cancel</div>
+                    </div>
+                </div>
+            );
+        }
+
+        /** Company info modal */
+        function CompanyModal({ companyName, onSave, onClose }) {
+            const [value, setValue] = useState(companyName);
+            const inputRef = useRef(null);
+
+            useEffect(() => {
+                inputRef.current?.focus();
+                const handleKeyDown = (e) => {
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        onClose();
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        onSave(value);
+                    }
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [value, onSave, onClose]);
+
+            return (
+                <div className="tally-modal-overlay" data-tally-modal role="dialog" aria-modal="true">
+                    <div className="tally-modal">
+                        <div className="tally-modal-header">Company Information (F3)</div>
+                        <div className="tally-modal-body">
+                            <label>Name of Company</label>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                            />
+                        </div>
+                        <div className="tally-modal-footer">Enter: Accept · Esc: Cancel</div>
+                    </div>
+                </div>
+            );
+        }
+
+        function TallyPrimeWeb() {
+            const [currentMenuIndex, setCurrentMenuIndex] = useState(0);
+            const [currentScreen, setCurrentScreen] = useState('gateway');
+            const [activeModal, setActiveModal] = useState(null);
+            const [currentDate, setCurrentDate] = useState('Sunday, 24-May-2026');
+            const [companyName, setCompanyName] = useState('Demo Company Ltd.');
+
+            const menuWithIndex = GATEWAY_MENU.map((item, index) => ({ ...item, index }));
+            const isGatewayActive = currentScreen === 'gateway' && activeModal === null;
+
+            const openDateModal = useCallback(() => setActiveModal('date'), []);
+            const openCompanyModal = useCallback(() => setActiveModal('company'), []);
+            const closeModal = useCallback(() => setActiveModal(null), []);
+
+            /** Execute gateway menu action for index */
+            const activateMenuItem = useCallback((index) => {
+                const item = GATEWAY_MENU[index];
+                setCurrentMenuIndex(index);
+                if (item.screen === 'vouchers') {
+                    setCurrentScreen('vouchers');
+                } else if (item.screen === 'daybook') {
+                    setCurrentScreen('daybook');
+                } else if (item.screen === 'quit') {
+                    if (window.confirm('Quit Tally?')) window.location.href = 'index.html';
+                } else {
+                    alert(`Screen for "${item.label}" is not implemented yet.`);
+                }
+            }, []);
+
+            /** Gateway-only keyboard: arrows, Enter, letter hotkeys */
+            useEffect(() => {
+                if (!isGatewayActive) return;
+
+                const handleKeyDown = (e) => {
+                    if (isEditableTarget(e.target)) return;
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        setCurrentMenuIndex((prev) => wrapMenuIndex(prev, 1));
+                        return;
+                    }
+                    if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        setCurrentMenuIndex((prev) => wrapMenuIndex(prev, -1));
+                        return;
+                    }
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        activateMenuItem(currentMenuIndex);
+                        return;
+                    }
+
+                    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                        const menuIdx = findMenuIndexByHotkey(e.key);
+                        if (menuIdx >= 0) {
+                            e.preventDefault();
+                            activateMenuItem(menuIdx);
+                            return;
+                        }
+                        const top = TOP_BAR_SHORTCUTS.find((t) => t.hotkey === e.key.toLowerCase());
+                        if (top) {
+                            e.preventDefault();
+                            if (top.action === 'company') openCompanyModal();
+                            else alert(`${top.label} — not implemented yet.`);
+                        }
+                    }
+                };
+
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [isGatewayActive, currentMenuIndex, activateMenuItem, openCompanyModal]);
+
+            /** Function keys F1–F12 — blocked from browser defaults */
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (!isFunctionKey(e.key)) return;
+                    e.preventDefault();
+
+                    if (activeModal) return;
+                    if (isEditableTarget(e.target) && currentScreen !== 'gateway') return;
+
+                    switch (e.key) {
+                        case 'F2':
+                            openDateModal();
+                            break;
+                        case 'F3':
+                            openCompanyModal();
+                            break;
+                        case 'F1':
+                            alert('Help — not implemented yet.');
+                            break;
+                        default:
+                            break;
+                    }
+                };
+
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [activeModal, currentScreen, openDateModal, openCompanyModal]);
+
+            const masters = menuWithIndex.slice(0, 3);
+            const transactions = menuWithIndex.slice(3, 6);
+            const reports = menuWithIndex.slice(6, 9);
+            const quitItem = menuWithIndex[9];
+
+            if (currentScreen === 'vouchers') {
+                return (
+                    <VoucherScreen onBack={() => setCurrentScreen('gateway')} />
+                );
+            }
+            if (currentScreen === 'daybook') {
+                return (
+                    <DayBookScreen onBack={() => setCurrentScreen('gateway')} />
+                );
+            }
+
+            return (
+                <div className="h-screen w-screen overflow-hidden flex flex-col font-sans bg-white text-black select-none cursor-default">
+                    <div className="flex items-center h-10 px-4 bg-[#dff1f1] border-b border-[#8ab6b6] text-xs font-bold text-[#005a5a] gap-6 shrink-0">
+                        {TOP_BAR_SHORTCUTS.map((t) => (
+                            <span key={t.hotkey}>
+                                <span className="tally-hotkey">{t.hotkey.toUpperCase()}</span>: {t.label}
+                            </span>
+                        ))}
+                    </div>
+
+                    <div className="flex flex-1 h-[calc(100vh-40px)] relative">
+                        <div className="flex-1 grid grid-cols-2 pr-16">
+                            <div className="border-r border-[#8ab6b6] p-6 text-sm">
+                                <div className="grid grid-cols-2 gap-4 mb-6">
+                                    <div>
+                                        <p className="font-bold text-[#005a5a] mb-1">Current Period</p>
+                                        <p>1-Apr-25 to 31-Mar-26</p>
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-[#005a5a] mb-1">Current Date</p>
+                                        <p>{currentDate}</p>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4 border-t border-[#8ab6b6] pt-4">
+                                    <div>
+                                        <p className="font-bold text-[#005a5a] mb-1">Name of Company</p>
+                                        <p className="font-bold">{companyName}</p>
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-[#005a5a] mb-1">Date of Last Entry</p>
+                                        <p>24-May-2026</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="p-8 flex justify-center items-start bg-[#fcfcfc]">
+                                <div className="w-80 border border-[#8ab6b6] bg-white shadow-lg" id="gateway-menu">
+                                    <div className="bg-[#005a5a] text-white text-center py-2 text-sm font-bold">
+                                        Gateway of Tally
+                                    </div>
+                                    <div className="py-2">
+                                        <div className="px-4 py-1 text-xs text-gray-500 font-bold uppercase tracking-wider">Masters</div>
+                                        {masters.map((item) => (
+                                            <MenuItem key={item.label} item={item} isActive={currentMenuIndex === item.index} />
+                                        ))}
+                                        <div className="px-4 py-1 mt-2 text-xs text-gray-500 font-bold uppercase tracking-wider">Transactions</div>
+                                        {transactions.map((item) => (
+                                            <MenuItem key={item.label} item={item} isActive={currentMenuIndex === item.index} />
+                                        ))}
+                                        <div className="px-4 py-1 mt-2 text-xs text-gray-500 font-bold uppercase tracking-wider">Reports</div>
+                                        {reports.map((item) => (
+                                            <MenuItem key={item.label} item={item} isActive={currentMenuIndex === item.index} />
+                                        ))}
+                                        <div className="mt-4">
+                                            <MenuItem item={quitItem} isActive={currentMenuIndex === quitItem.index} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <FunctionKeyBar />
+                    </div>
+
+                    <div className="h-8 flex bg-[#eaf4f4] border-t border-[#8ab6b6] text-[10px] text-[#005a5a] shrink-0">
+                        {Object.entries(FUNCTION_KEYS).map(([key, cfg]) => (
+                            <div key={key} className={`flex-1 flex items-center justify-center border-r border-[#8ab6b6] tally-fn-key ${key === 'F2' || key === 'F3' ? '' : ''}`}>
+                                <span className="font-bold mr-1">{key}</span>
+                                <span>{cfg.label}</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    {activeModal === 'date' && (
+                        <DateModal
+                            currentDate={currentDate}
+                            onSave={(v) => { setCurrentDate(v); closeModal(); }}
+                            onClose={closeModal}
+                        />
+                    )}
+                    {activeModal === 'company' && (
+                        <CompanyModal
+                            companyName={companyName}
+                            onSave={(v) => { setCompanyName(v); closeModal(); }}
+                            onClose={closeModal}
+                        />
+                    )}
+                </div>
+            );
+        }
+
+        function FunctionKeyBar() {
+            return (
+                <div className="absolute right-0 top-0 bottom-8 w-16 bg-[#eaf4f4] border-l border-[#8ab6b6] flex flex-col text-xs text-[#005a5a] z-10">
+                    <div className="flex flex-col items-center justify-center p-2 border-b border-[#8ab6b6]">
+                        <span className="font-bold">F2</span>
+                        <span>Date</span>
+                    </div>
+                    <div className="flex flex-col items-center justify-center p-2 border-b border-[#8ab6b6]">
+                        <span className="font-bold">F3</span>
+                        <span>Cmpny</span>
+                    </div>
+                </div>
+            );
+        }
+
+        /** Sub-screen: voucher entry — gateway listeners are unmounted */
+        function VoucherScreen({ onBack }) {
+            const [focusIdx, setFocusIdx] = useState(1);
+            const inputs = useRef([]);
+
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        onBack();
+                    } else if (e.key === 'Enter' && !isEditableTarget(e.target)) {
+                        e.preventDefault();
+                        setFocusIdx((p) => Math.min(p + 1, 3));
+                    }
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [onBack]);
+
+            useEffect(() => {
+                inputs.current[focusIdx]?.focus();
+            }, [focusIdx]);
+
+            return (
+                <div className="h-screen flex flex-col font-sans bg-[#fcfcfc] pr-16">
+                    <div className="bg-[#005a5a] text-white px-4 py-2 text-sm font-bold flex justify-between">
+                        <span>Accounting Voucher Creation</span>
+                        <span>Esc: Back</span>
+                    </div>
+                    <div className="p-8">
+                        <p className="text-sm text-gray-600">Voucher entry screen — use Esc to return to Gateway.</p>
+                    </div>
+                </div>
+            );
+        }
+
+        function DayBookScreen({ onBack }) {
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        onBack();
+                    }
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [onBack]);
+
+            return (
+                <div className="h-screen flex flex-col font-sans bg-[#fcfcfc] pr-16">
+                    <div className="bg-[#005a5a] text-white px-4 py-2 text-sm font-bold flex justify-between">
+                        <span>Day Book</span>
+                        <span>Esc: Back</span>
+                    </div>
+                    <div className="p-8">
+                        <p className="text-sm text-gray-600">Day Book — use Esc to return to Gateway.</p>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<TallyPrimeWeb />);
+    </script>
+
+  
+  
+  
+  <!-- Premium Pill Theme Switcher -->
+  <div id="theme-switcher-container" style="position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+    <div class="flex items-center gap-1 p-1 bg-card/80 backdrop-blur-2xl border border-border rounded-full shadow-2xl">
+      <button onclick="setTheme('dp')" id="btn-dp" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#1D4ED8] to-[#E11D48] shadow-[0_0_10px_rgba(29,78,216,0.5)]"></span>
+        DP Mode
+      </button>
+      <button onclick="setTheme('light')" id="btn-light" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <i data-lucide="sun" class="w-4 h-4"></i>
+        Light
+      </button>
+      <button onclick="setTheme('dark')" id="btn-dark" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <i data-lucide="moon" class="w-4 h-4"></i>
+        Dark
+      </button>
+    </div>
+  </div>
+  <script>
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme-mode', theme);
+      updateSwitcherUI(theme);
+    }
+
+    function updateSwitcherUI(theme) {
+      const btns = ['dp', 'light', 'dark'];
+      btns.forEach(t => {
+        const btn = document.getElementById('btn-' + t);
+        if(!btn) return;
+        if(t === theme) {
+          btn.classList.add('bg-background', 'text-foreground', 'shadow-sm');
+          btn.classList.remove('text-muted-foreground');
+        } else {
+          btn.classList.remove('bg-background', 'text-foreground', 'shadow-sm');
+          btn.classList.add('text-muted-foreground');
+        }
+      });
+      if(window.lucide) window.lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentTheme = localStorage.getItem('theme-mode') || 'dp';
+      updateSwitcherUI(currentTheme);
+    });
+  </script>
+</body>
+</html>
+
+</html>

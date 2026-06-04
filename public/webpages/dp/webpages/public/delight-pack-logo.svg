@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="80" viewBox="0 0 320 80">
+  <rect width="320" height="80" rx="8" fill="#ffffff"/>
+  <rect x="8" y="12" width="56" height="56" rx="12" fill="#0056b3"/>
+  <path d="M24 48V32h8c4.4 0 8 3.6 8 8s-3.6 8-8 8h-8zm8-4c2.2 0 4-1.8 4-4s-1.8-4-4-4h-4v8h4z" fill="#ffffff"/>
+  <path d="M44 48V32h4v16h-4z" fill="#ffffff"/>
+  <text x="76" y="38" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#0056b3">Delight</text>
+  <text x="168" y="38" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#e63946">Pack</text>
+  <text x="76" y="58" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#64748b" letter-spacing="1.2">CUSTOM PACKAGING � DUBAI, UAE</text>
+</svg>

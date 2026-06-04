@@ -1,0 +1,6 @@
+{
+  "name": "Nexus Careers Portal",
+  "description": "Careers and Internship section layout with job filtering and a drag-and-drop application form.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

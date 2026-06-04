@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delight Pack - Gateway</title>
+  <!-- Tailwind CSS v4 via CDN -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+          <style type="text/tailwindcss">
+    @theme {
+      --color-primary: var(--primary);
+      --color-primary-light: var(--primary-light);
+      --color-primary-dark: var(--primary-dark);
+      --color-secondary: var(--secondary);
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-card-hover: var(--card-hover);
+      --color-border: var(--border);
+      --color-muted: var(--muted);
+      --color-muted-foreground: var(--muted-foreground);
+      --color-accent: var(--accent);
+      --font-sans: 'Inter', sans-serif;
+    }
+
+    /* DP Mode (Ultra Premium: Obsidian Black + Glassmorphism + DP Auras) */
+    :root, [data-theme="dp"] {
+      --primary: #1D4ED8; 
+      --primary-light: #3b82f6;
+      --primary-dark: #1e3a8a;
+      --secondary: #E11D48;
+      --background: #050505; /* Obsidian Black */
+      --foreground: #fdfdfd;
+      --card: rgba(255, 255, 255, 0.02); /* Glassmorphism Base */
+      --card-hover: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.08); /* Frosted edges */
+      --muted: rgba(255, 255, 255, 0.05); 
+      --muted-foreground: #94a3b8;
+      --accent: #fdfdfd; /* Keep icons clean and white so they pop against the glows */
+      color-scheme: dark;
+    }
+
+    /* Light Mode (Clean editorial white) */
+    [data-theme="light"] {
+      --primary: #0f172a;
+      --primary-light: #334155;
+      --primary-dark: #020617;
+      --secondary: #475569;
+      --background: #ffffff;
+      --foreground: #1e293b;
+      --card: #f8fafc;
+      --card-hover: #f1f5f9;
+      --border: #cbd5e1;
+      --muted: #f1f5f9;
+      --muted-foreground: #64748b;
+      --accent: #0f172a;
+      color-scheme: light;
+    }
+
+    /* Dark Mode (Grayscale, pure black/white) */
+    [data-theme="dark"] {
+      --primary: #ffffff; 
+      --primary-light: #f1f5f9;
+      --primary-dark: #cbd5e1;
+      --secondary: #94a3b8;
+      --background: #000000;
+      --foreground: #ffffff;
+      --card: #0a0a0a;
+      --card-hover: #111111;
+      --border: #1c1c1c;
+      --muted: #1c1c1c;
+      --muted-foreground: #a3a3a3;
+      --accent: #ffffff;
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-sans);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      margin: 0;
+      position: relative;
+    }
+    
+    /* Aura logic */
+    #dp-aura {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    [data-theme="dp"] #dp-aura {
+      display: block;
+    }
+    
+    /* Cinematic Glass Card Hover Glow for DP Mode */
+    [data-theme="dp"] .glass-card {
+      transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    [data-theme="dp"] .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px -10px rgba(29, 78, 216, 0.15), 0 0 30px -10px rgba(225, 29, 72, 0.15);
+    }
+    
+    .icon-accent {
+      color: var(--accent);
+    }
+    
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(1.05); }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 8s ease-in-out infinite;
+    }
+  </style>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    // Initialization script to set theme immediately and prevent flash
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-white selection:text-black">
+
+  <!-- Ambient DP Aura Glow (Only visible in DP Mode) -->
+  <!-- Ambient Interactive DP Aura Glow (Only visible in DP Mode) -->
+  <div id="dp-aura">
+    <div id="dp-orb-blue" class="fixed top-0 left-0 w-[600px] h-[600px] -ml-[300px] -mt-[300px] bg-[#1D4ED8] rounded-full mix-blend-screen filter blur-[140px] opacity-30 pointer-events-none" style="transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+    <div id="dp-orb-red" class="fixed top-0 left-0 w-[800px] h-[800px] -ml-[400px] -mt-[400px] bg-[#E11D48] rounded-full mix-blend-screen filter blur-[180px] opacity-20 pointer-events-none" style="transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+  </div>
+  <script>
+    document.addEventListener('mousemove', (e) => {
+      // Only track if DP Mode is active to save performance in other modes
+      if (document.documentElement.getAttribute('data-theme') !== 'dp') return;
+      
+      const blueOrb = document.getElementById('dp-orb-blue');
+      const redOrb = document.getElementById('dp-orb-red');
+      
+      const x = e.clientX;
+      const y = e.clientY;
+      
+      // Blue orb perfectly centers on the mouse
+      if (blueOrb) blueOrb.style.transform = `translate(${x}px, ${y}px)`;
+      
+      // Red orb trails slightly and offsets to create a stunning blended effect
+      if (redOrb) redOrb.style.transform = `translate(${x + 80}px, ${y + 80}px)`;
+    });
+  </script>
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 bg-card backdrop-blur-2xl glass-card/80 backdrop-blur-md border-b border-border">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 group">
+        <i data-lucide="package-2" class="w-6 h-6 icon-accent group-hover:text-primary-light transition-colors"></i>
+        <span class="font-semibold text-lg tracking-tighter text-foreground">Delight Pack</span>
+      </a>
+      <div class="flex items-center gap-4">
+        <button class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <i data-lucide="globe" class="w-4 h-4"></i>
+          <span>EN</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex flex-col pt-24 px-6 md:px-12 max-w-7xl mx-auto w-full gap-16 pb-24">
+    
+    <!-- Hero -->
+    <section class="flex flex-col gap-6 pt-12">
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-foreground leading-tight">
+        Let's package something<br class="hidden md:block"/> exceptional.
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-2xl font-light">
+        The central gateway to the Delight Pack enterprise ecosystem. Secure your supply chain, monitor real-time logistics, and craft bespoke industrial packaging solutions.
+      </p>
+    </section>
+
+    <!-- Gateway Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-px bg-muted/50 border border-border rounded-xl overflow-hidden">
+      
+      <!-- Card 1 -->
+      <a href="app/index.html#/login" class="group relative bg-card p-8 flex flex-col gap-4 hover:bg-card-hover transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105"></div>
+        <div class="flex justify-between items-start z-10">
+          <div class="p-3 bg-muted/40 rounded-lg group-hover:bg-muted/80 transition-colors duration-500">
+            <i data-lucide="shield" class="w-6 h-6 icon-accent"></i>
+          </div>
+          <i data-lucide="arrow-up-right" class="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+        </div>
+        <div class="z-10 mt-4">
+          <h3 class="text-xl font-medium text-foreground mb-2">Customer Portal</h3>
+          <p class="text-sm text-muted-foreground font-light leading-relaxed">Secure B2B Client Dashboard & Order Tracking</p>
+        </div>
+      </a>
+
+      <!-- Card 2 (Brochure) -->
+      <a href="webpages/brochure.html" class="group relative bg-card backdrop-blur-2xl glass-card p-8 flex flex-col gap-4 hover:bg-card backdrop-blur-2xl glass-card-hover transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105"></div>
+        <div class="flex justify-between items-start z-10">
+          <div class="p-3 bg-muted/40 rounded-lg group-hover:bg-muted/80 transition-colors duration-500">
+            <i data-lucide="box" class="w-6 h-6 icon-accent"></i>
+          </div>
+          <i data-lucide="arrow-up-right" class="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+        </div>
+        <div class="z-10 mt-4">
+          <h3 class="text-xl font-medium text-foreground mb-2">Company Brochure</h3>
+          <p class="text-sm text-muted-foreground font-light leading-relaxed">Luxury Custom Printing & Industrial Packaging Showcase</p>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="app/index.html#/careers" class="group relative bg-card p-8 flex flex-col gap-4 hover:bg-card-hover transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105"></div>
+        <div class="flex justify-between items-start z-10">
+          <div class="p-3 bg-muted/40 rounded-lg group-hover:bg-muted/80 transition-colors duration-500">
+            <i data-lucide="users" class="w-6 h-6 icon-accent"></i>
+          </div>
+          <i data-lucide="arrow-up-right" class="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+        </div>
+        <div class="z-10 mt-4">
+          <h3 class="text-xl font-medium text-foreground mb-2">Careers Hub</h3>
+          <p class="text-sm text-muted-foreground font-light leading-relaxed">Join the Team. Explore Factory Floor, Logistics, & Internships</p>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="app/index.html#/contact" class="group relative bg-card p-8 flex flex-col gap-4 hover:bg-card-hover transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105"></div>
+        <div class="flex justify-between items-start z-10">
+          <div class="p-3 bg-muted/40 rounded-lg group-hover:bg-muted/80 transition-colors duration-500">
+            <i data-lucide="map-pin" class="w-6 h-6 icon-accent"></i>
+          </div>
+          <i data-lucide="arrow-up-right" class="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+        </div>
+        <div class="z-10 mt-4">
+          <h3 class="text-xl font-medium text-foreground mb-2">Contact & Inquiries</h3>
+          <p class="text-sm text-muted-foreground font-light leading-relaxed">Direct Dubai Workspace Location & WhatsApp Integration</p>
+        </div>
+      </a>
+
+    </section>
+
+    <!-- Mobile App Promo -->
+    <section class="mt-8 border border-border rounded-2xl p-8 md:p-12 bg-card glass-card backdrop-blur-2xl relative overflow-hidden">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-foreground/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+        <div class="flex-1 flex flex-col gap-8">
+          <div>
+            <h2 class="text-3xl font-semibold tracking-tighter text-foreground mb-4">The Ecosystem Hub</h2>
+            <p class="text-muted-foreground font-light max-w-md">Delight Pack Mobile Apps are designed for speed and uncompromising precision.</p>
+          </div>
+
+          <div class="flex flex-col gap-6">
+            <div class="flex items-start gap-4 group">
+              <div class="mt-1">
+                <i data-lucide="activity" class="w-5 h-5 text-foreground group-hover:text-emerald-400 transition-colors"></i>
+              </div>
+              <div>
+                <h4 class="font-medium text-foreground text-sm">Admin Mobile App</h4>
+                <p class="text-xs text-muted-foreground mt-1">Live factory analytics, inventory alerts, and instant order approvals for management.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-4 group">
+              <div class="mt-1">
+                <i data-lucide="message-square" class="w-5 h-5 text-foreground group-hover:text-blue-400 transition-colors"></i>
+              </div>
+              <div>
+                <h4 class="font-medium text-foreground text-sm">Customer Mobile App</h4>
+                <p class="text-xs text-muted-foreground mt-1">Seamless on-the-go order placement, instant support chat, and real-time delivery tracking.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-4 pt-4">
+            <button class="flex items-center justify-center gap-3 px-5 py-2.5 border border-border hover:border-slate-500 rounded-lg transition-colors bg-muted hover:bg-card-hover backdrop-blur-sm text-foreground">
+              <span class="text-xs font-medium text-left">Download on the<br/><span class="text-sm font-semibold">App Store</span></span>
+            </button>
+            <button class="flex items-center justify-center gap-3 px-5 py-2.5 border border-border hover:border-slate-500 rounded-lg transition-colors bg-muted hover:bg-card-hover backdrop-blur-sm text-foreground">
+              <span class="text-xs font-medium text-left">Get it on<br/><span class="text-sm font-semibold">Google Play</span></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex-1 w-full max-w-sm">
+          <div class="border border-border bg-card backdrop-blur-2xl glass-card rounded-[2.5rem] p-6 shadow-2xl relative aspect-[1/1.5] flex flex-col">
+            <div class="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-muted rounded-full"></div>
+            <div class="mt-6 flex flex-col gap-4 flex-grow">
+              <div class="flex justify-between items-center pb-4 border-b border-border">
+                <div>
+                  <div class="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Live Status</div>
+                  <div class="text-sm font-semibold text-foreground">Factory Floor Alpha</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="text-xs text-emerald-500">Active</div>
+                  <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-3">
+                <div class="bg-muted/30 p-4 rounded-xl border border-border/50 hover:bg-muted/50 transition-colors cursor-pointer">
+                  <div class="text-2xl font-semibold text-foreground mb-1">94%</div>
+                  <div class="text-xs text-muted-foreground">Yield Rate</div>
+                </div>
+                <div class="bg-muted/30 p-4 rounded-xl border border-border/50 hover:bg-muted/50 transition-colors cursor-pointer">
+                  <div class="text-2xl font-semibold text-foreground mb-1">1.2k</div>
+                  <div class="text-xs text-muted-foreground">Orders Active</div>
+                </div>
+              </div>
+
+              <div class="bg-muted/30 p-4 rounded-xl border border-border/50 mt-2 flex-grow">
+                 <div class="text-xs text-muted-foreground mb-4">Recent Alerts</div>
+                 <div class="flex flex-col gap-4">
+                   <div class="flex items-center gap-3">
+                     <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                       <i data-lucide="activity" class="w-4 h-4 text-blue-400"></i>
+                     </div>
+                     <div>
+                       <div class="text-sm text-foreground">Inventory Low: Box A</div>
+                       <div class="text-[10px] text-muted-foreground">2 mins ago</div>
+                     </div>
+                   </div>
+                   <div class="flex items-center gap-3">
+                     <div class="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                       <i data-lucide="shield" class="w-4 h-4 text-emerald-400"></i>
+                     </div>
+                     <div>
+                       <div class="text-sm text-foreground">Order #892 Approved</div>
+                       <div class="text-[10px] text-muted-foreground">14 mins ago</div>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+            </div>
+            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-muted rounded-full"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+  
+  
+  
+  <!-- Premium Pill Theme Switcher -->
+  <div id="theme-switcher-container" style="position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+    <div class="flex items-center gap-1 p-1 bg-card/80 backdrop-blur-2xl border border-border rounded-full shadow-2xl">
+      <button onclick="setTheme('dp')" id="btn-dp" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#1D4ED8] to-[#E11D48] shadow-[0_0_10px_rgba(29,78,216,0.5)]"></span>
+        DP Mode
+      </button>
+      <button onclick="setTheme('light')" id="btn-light" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <i data-lucide="sun" class="w-4 h-4"></i>
+        Light
+      </button>
+      <button onclick="setTheme('dark')" id="btn-dark" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <i data-lucide="moon" class="w-4 h-4"></i>
+        Dark
+      </button>
+    </div>
+  </div>
+  <script>
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme-mode', theme);
+      updateSwitcherUI(theme);
+    }
+
+    function updateSwitcherUI(theme) {
+      const btns = ['dp', 'light', 'dark'];
+      btns.forEach(t => {
+        const btn = document.getElementById('btn-' + t);
+        if(!btn) return;
+        if(t === theme) {
+          btn.classList.add('bg-background', 'text-foreground', 'shadow-sm');
+          btn.classList.remove('text-muted-foreground');
+        } else {
+          btn.classList.remove('bg-background', 'text-foreground', 'shadow-sm');
+          btn.classList.add('text-muted-foreground');
+        }
+      });
+      if(window.lucide) window.lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentTheme = localStorage.getItem('theme-mode') || 'dp';
+      updateSwitcherUI(currentTheme);
+    });
+  </script>
+</body>
+</html>

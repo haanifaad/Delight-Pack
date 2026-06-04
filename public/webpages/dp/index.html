@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DP Dashboard & Notepad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+        <style type="text/tailwindcss">
+    @theme {
+      --color-primary: var(--primary);
+      --color-primary-light: var(--primary-light);
+      --color-primary-dark: var(--primary-dark);
+      --color-secondary: var(--secondary);
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-card-hover: var(--card-hover);
+      --color-border: var(--border);
+      --color-muted: var(--muted);
+      --color-muted-foreground: var(--muted-foreground);
+      --color-accent: var(--accent);
+      --font-sans: 'Inter', sans-serif;
+    }
+
+    /* DP Mode (Ultra Premium: Obsidian Black + Glassmorphism + DP Auras) */
+    :root, [data-theme="dp"] {
+      --primary: #1D4ED8; 
+      --primary-light: #3b82f6;
+      --primary-dark: #1e3a8a;
+      --secondary: #E11D48;
+      --background: #050505; /* Obsidian Black */
+      --foreground: #fdfdfd;
+      --card: rgba(255, 255, 255, 0.02); /* Glassmorphism Base */
+      --card-hover: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.08); /* Frosted edges */
+      --muted: rgba(255, 255, 255, 0.05); 
+      --muted-foreground: #94a3b8;
+      --accent: #fdfdfd; /* Keep icons clean and white so they pop against the glows */
+      color-scheme: dark;
+    }
+
+    /* Light Mode (Clean editorial white) */
+    [data-theme="light"] {
+      --primary: #0f172a;
+      --primary-light: #334155;
+      --primary-dark: #020617;
+      --secondary: #475569;
+      --background: #ffffff;
+      --foreground: #1e293b;
+      --card: #f8fafc;
+      --card-hover: #f1f5f9;
+      --border: #cbd5e1;
+      --muted: #f1f5f9;
+      --muted-foreground: #64748b;
+      --accent: #0f172a;
+      color-scheme: light;
+    }
+
+    /* Dark Mode (Grayscale, pure black/white) */
+    [data-theme="dark"] {
+      --primary: #ffffff; 
+      --primary-light: #f1f5f9;
+      --primary-dark: #cbd5e1;
+      --secondary: #94a3b8;
+      --background: #000000;
+      --foreground: #ffffff;
+      --card: #0a0a0a;
+      --card-hover: #111111;
+      --border: #1c1c1c;
+      --muted: #1c1c1c;
+      --muted-foreground: #a3a3a3;
+      --accent: #ffffff;
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-sans);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      margin: 0;
+      position: relative;
+    }
+    
+    /* Aura logic */
+    #dp-aura {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    [data-theme="dp"] #dp-aura {
+      display: block;
+    }
+    
+    /* Cinematic Glass Card Hover Glow for DP Mode */
+    [data-theme="dp"] .glass-card {
+      transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    [data-theme="dp"] .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px -10px rgba(29, 78, 216, 0.15), 0 0 30px -10px rgba(225, 29, 72, 0.15);
+    }
+    
+    .icon-accent {
+      color: var(--accent);
+    }
+    
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(1.05); }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 8s ease-in-out infinite;
+    }
+  </style>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>
+  <script>
+    // Initialization script to set theme immediately and prevent flash
+    (function() {
+      const savedTheme = localStorage.getItem('theme-mode');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dp');
+      }
+    })();
+  </script>\n</head>
+<body class="bg-gray-50 h-screen flex flex-col font-sans">
+
+  <!-- Ambient DP Aura Glow (Only visible in DP Mode) -->
+  <!-- Ambient Interactive DP Aura Glow (Only visible in DP Mode) -->
+  <div id="dp-aura">
+    <div id="dp-orb-blue" class="fixed top-0 left-0 w-[600px] h-[600px] -ml-[300px] -mt-[300px] bg-[#1D4ED8] rounded-full mix-blend-screen filter blur-[140px] opacity-30 pointer-events-none" style="transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+    <div id="dp-orb-red" class="fixed top-0 left-0 w-[800px] h-[800px] -ml-[400px] -mt-[400px] bg-[#E11D48] rounded-full mix-blend-screen filter blur-[180px] opacity-20 pointer-events-none" style="transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+  </div>
+  <script>
+    document.addEventListener('mousemove', (e) => {
+      // Only track if DP Mode is active to save performance in other modes
+      if (document.documentElement.getAttribute('data-theme') !== 'dp') return;
+      
+      const blueOrb = document.getElementById('dp-orb-blue');
+      const redOrb = document.getElementById('dp-orb-red');
+      
+      const x = e.clientX;
+      const y = e.clientY;
+      
+      // Blue orb perfectly centers on the mouse
+      if (blueOrb) blueOrb.style.transform = `translate(${x}px, ${y}px)`;
+      
+      // Red orb trails slightly and offsets to create a stunning blended effect
+      if (redOrb) redOrb.style.transform = `translate(${x + 80}px, ${y + 80}px)`;
+    });
+  </script>
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
+        <h1 class="text-xl font-bold text-gray-800">DP Hub</h1>
+        <div class="flex gap-4">
+            <a href="tally.html" class="bg-[#005a5a] hover:bg-[#004a4a] text-white px-5 py-2 rounded-md text-sm font-semibold transition-colors shadow-sm flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="9" x2="9" y1="21" y2="9"/></svg>
+                Launch Tally Interface
+            </a>
+            <a href="http://localhost:9002/en" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md text-sm font-semibold transition-colors shadow-sm flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                Open Next.js Web App
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col max-w-6xl mx-auto w-full p-6">
+        <p class="text-gray-500 mb-4 text-sm">Use this quick scratchpad to jot down amounts, ledgers, or notes before entering them into the tracker.</p>
+        <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col overflow-hidden">
+            <div class="bg-gray-50 px-4 py-3 border-b border-gray-200 text-xs font-bold text-gray-500 uppercase tracking-wider flex justify-between items-center">
+                <span>Notepad</span>
+                <button onclick="document.querySelector('textarea').value = ''" class="text-gray-400 hover:text-red-500 transition-colors">Clear</button>
+            </div>
+            <textarea 
+                class="flex-1 w-full p-6 resize-none outline-none text-gray-700 text-lg leading-relaxed bg-[#fdfdfd]" 
+                placeholder="Start typing your notes here..."
+                spellcheck="false"
+            ></textarea>
+        </div>
+    </main>
+
+    <script>
+        // Simple local storage persistence for the notepad
+        const textarea = document.querySelector('textarea');
+        const savedNotes = localStorage.getItem('dp_notes');
+        
+        if (savedNotes) {
+            textarea.value = savedNotes;
+        }
+
+        textarea.addEventListener('input', (e) => {
+            localStorage.setItem('dp_notes', e.target.value);
+        });
+    </script>
+
+  
+  
+  
+  <!-- Premium Pill Theme Switcher -->
+  <div id="theme-switcher-container" style="position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+    <div class="flex items-center gap-1 p-1 bg-card/80 backdrop-blur-2xl border border-border rounded-full shadow-2xl">
+      <button onclick="setTheme('dp')" id="btn-dp" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#1D4ED8] to-[#E11D48] shadow-[0_0_10px_rgba(29,78,216,0.5)]"></span>
+        DP Mode
+      </button>
+      <button onclick="setTheme('light')" id="btn-light" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <i data-lucide="sun" class="w-4 h-4"></i>
+        Light
+      </button>
+      <button onclick="setTheme('dark')" id="btn-dark" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
+        <i data-lucide="moon" class="w-4 h-4"></i>
+        Dark
+      </button>
+    </div>
+  </div>
+  <script>
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme-mode', theme);
+      updateSwitcherUI(theme);
+    }
+
+    function updateSwitcherUI(theme) {
+      const btns = ['dp', 'light', 'dark'];
+      btns.forEach(t => {
+        const btn = document.getElementById('btn-' + t);
+        if(!btn) return;
+        if(t === theme) {
+          btn.classList.add('bg-background', 'text-foreground', 'shadow-sm');
+          btn.classList.remove('text-muted-foreground');
+        } else {
+          btn.classList.remove('bg-background', 'text-foreground', 'shadow-sm');
+          btn.classList.add('text-muted-foreground');
+        }
+      });
+      if(window.lucide) window.lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentTheme = localStorage.getItem('theme-mode') || 'dp';
+      updateSwitcherUI(currentTheme);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Client uploads print designs before calling submitCustomOrder.
+    match /custom_orders/{orderId}/designs/{fileName} {
+      allow write: if request.resource.size < 10 * 1024 * 1024
+        && (
+          request.resource.contentType.matches('image/.*')
+          || request.resource.contentType == 'application/pdf'
+        );
+      allow read: if false;
+    }
+
+    // Invoice PDFs are written by Cloud Functions (Admin SDK) and served via signed URLs.
+    match /invoices/{orderId}/{fileName} {
+      allow read, write: if false;
+    }
+
+    match /resumes/{fileName} {
+      allow write: if request.resource.size < 8 * 1024 * 1024
+        && (
+          request.resource.contentType == 'application/pdf'
+          || request.resource.contentType == 'application/msword'
+          || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        );
+      allow read: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

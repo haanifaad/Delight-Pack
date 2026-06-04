@@ -1,0 +1,53 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Custom packaging orders are written only by Cloud Functions (Admin SDK).
+    match /custom_orders/{orderId} {
+      allow read: if false;
+      allow create, update, delete: if false;
+    }
+
+    match /quotations/{docId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.customerId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.customerId;
+      allow update: if request.auth != null && request.auth.uid == resource.data.customerId && request.auth.uid == request.resource.data.customerId;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.customerId;
+    }
+
+    match /support_chats/{docId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.customerId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.customerId;
+      allow update: if request.auth != null && request.auth.uid == resource.data.customerId && request.auth.uid == request.resource.data.customerId;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.customerId;
+    }
+
+    match /orders/{docId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.customerId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.customerId;
+      allow update: if request.auth != null && request.auth.uid == resource.data.customerId && request.auth.uid == request.resource.data.customerId;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.customerId;
+    }
+
+    match /inventory/{docId} {
+      allow read, write: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+
+    match /finance/{docId} {
+      allow read, write: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+
+    // Existing app collections (adjust auth when you add sign-in).
+    match /transactions/{docId} {
+      allow read, write: if true;
+    }
+
+    match /spreadsheetData/{docId} {
+      allow read, write: if true;
+    }
+
+    match /products/{docId} {
+      allow read, write: if true;
+    }
+  }
+}
