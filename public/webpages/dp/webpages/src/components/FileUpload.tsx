@@ -56,7 +56,7 @@ export function FileUpload({ onFileSelect }: FileUploadProps) {
       
       {!selectedFile ? (
         <div
-          className={`relative flex flex-col items-center justify-center w-full h-40 rounded-xl border-2 border-dashed transition-colors duration-200 ease-in-out cursor-pointer bg-card glass-card backdrop-blur-2xl overflow-hidden ${
+          className={`relative flex flex-col items-center justify-center w-full h-40 rounded-xl border-2 border-dashed transition-colors duration-200 ease-in-out cursor-pointer bg-white overflow-hidden ${
             dragActive ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300 hover:border-gray-400'
           }`}
           onDragEnter={handleDrag}
@@ -73,22 +73,22 @@ export function FileUpload({ onFileSelect }: FileUploadProps) {
             className="hidden"
           />
           <UploadCloud className="w-10 h-10 text-gray-400 mb-3" />
-          <p className="text-sm text-muted-foreground font-medium">
+          <p className="text-sm text-gray-600 font-medium">
             <span className="text-indigo-600 hover:text-indigo-500">Click to upload</span> or drag and drop
           </p>
-          <p className="text-xs text-muted-foreground mt-1">PDF, DOC, DOCX up to 10MB</p>
+          <p className="text-xs text-gray-500 mt-1">PDF, DOC, DOCX up to 10MB</p>
         </div>
       ) : (
-        <div className="flex items-center justify-between p-4 bg-card glass-card backdrop-blur-2xl border border-border rounded-xl shadow-sm">
+        <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
           <div className="flex items-center space-x-3 overflow-hidden">
             <div className="flex-shrink-0 p-2 bg-indigo-50 text-indigo-600 rounded-lg">
               <FileIcon className="w-6 h-6" />
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">
+              <p className="text-sm font-medium text-gray-900 truncate">
                 {selectedFile.name}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-gray-500">
                 {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
               </p>
             </div>

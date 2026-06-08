@@ -14,7 +14,8 @@ const schema = z.object({
     message: "Please select a packaging type",
   }),
   quantity: z.number({
-    message: "Quantity must be a number",
+    required_error: "Quantity is required",
+    invalid_type_error: "Quantity must be a number",
   }).min(100, "Minimum order quantity is 100"),
   message: z.string().optional(),
 });

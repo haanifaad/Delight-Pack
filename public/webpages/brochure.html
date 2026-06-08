@@ -508,29 +508,10 @@
 <body>
 
   <!-- Ambient DP Aura Glow (Only visible in DP Mode) -->
-  <!-- Ambient Interactive DP Aura Glow (Only visible in DP Mode) -->
   <div id="dp-aura">
-    <div id="dp-orb-blue" class="fixed top-0 left-0 w-[600px] h-[600px] -ml-[300px] -mt-[300px] bg-[#1D4ED8] rounded-full mix-blend-screen filter blur-[140px] opacity-30 pointer-events-none" style="transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
-    <div id="dp-orb-red" class="fixed top-0 left-0 w-[800px] h-[800px] -ml-[400px] -mt-[400px] bg-[#E11D48] rounded-full mix-blend-screen filter blur-[180px] opacity-20 pointer-events-none" style="transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+    <div class="absolute top-[-15%] left-[-10%] w-[600px] h-[600px] bg-[#1D4ED8] rounded-full mix-blend-screen filter blur-[140px] animate-pulse-slow" style="opacity: 0.25;"></div>
+    <div class="absolute bottom-[-15%] right-[-10%] w-[800px] h-[800px] bg-[#E11D48] rounded-full mix-blend-screen filter blur-[180px] animate-pulse-slow" style="opacity: 0.2;"></div>
   </div>
-  <script>
-    document.addEventListener('mousemove', (e) => {
-      // Only track if DP Mode is active to save performance in other modes
-      if (document.documentElement.getAttribute('data-theme') !== 'dp') return;
-      
-      const blueOrb = document.getElementById('dp-orb-blue');
-      const redOrb = document.getElementById('dp-orb-red');
-      
-      const x = e.clientX;
-      const y = e.clientY;
-      
-      // Blue orb perfectly centers on the mouse
-      if (blueOrb) blueOrb.style.transform = `translate(${x}px, ${y}px)`;
-      
-      // Red orb trails slightly and offsets to create a stunning blended effect
-      if (redOrb) redOrb.style.transform = `translate(${x + 80}px, ${y + 80}px)`;
-    });
-  </script>
 
     <!-- Loading Screen -->
     <div id="loading-screen">
@@ -742,20 +723,6 @@
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.drawImage(img, 0, 0, img.width, img.height,
                               centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
-
-            // Add a smooth white gradient mask on the left and right sides
-            // This hides the waste particles without having to manually edit all 336 frames
-            const gradientLeft = context.createLinearGradient(0, 0, canvas.width * 0.25, 0);
-            gradientLeft.addColorStop(0, 'rgba(255, 255, 255, 1)');
-            gradientLeft.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            context.fillStyle = gradientLeft;
-            context.fillRect(0, 0, canvas.width * 0.25, canvas.height);
-
-            const gradientRight = context.createLinearGradient(canvas.width * 0.75, 0, canvas.width, 0);
-            gradientRight.addColorStop(0, 'rgba(255, 255, 255, 0)');
-            gradientRight.addColorStop(1, 'rgba(255, 255, 255, 1)');
-            context.fillStyle = gradientRight;
-            context.fillRect(canvas.width * 0.75, 0, canvas.width * 0.25, canvas.height);
         }
 
         const heroContainer = document.getElementById('hero-container');

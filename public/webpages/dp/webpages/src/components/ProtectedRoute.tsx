@@ -13,8 +13,8 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-3 text-muted-foreground">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-3 text-slate-600">
           <Loader2 className="h-8 w-8 animate-spin text-indigo-600" aria-hidden="true" />
           <p className="text-sm font-medium">Verifying your session…</p>
         </div>

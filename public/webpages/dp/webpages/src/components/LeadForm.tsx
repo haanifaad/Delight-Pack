@@ -67,17 +67,17 @@ export function LeadForm() {
 
   if (isSubmitted) {
     return (
-      <div className="bg-card glass-card backdrop-blur-2xl  border border-border  rounded-3xl p-8 sm:p-12 shadow-xl flex flex-col items-center justify-center text-center h-full min-h-[400px]">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-12 shadow-xl flex flex-col items-center justify-center text-center h-full min-h-[400px]">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", bounce: 0.5 }}
         >
-          <div className="w-20 h-20 bg-green-100  rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="w-10 h-10 text-green-600 " />
+          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
           </div>
-          <h3 className="text-2xl font-semibold text-foreground  mb-2">Request Received</h3>
-          <p className="text-muted-foreground  max-w-md mx-auto">
+          <h3 className="text-2xl font-semibold text-slate-900 dark:text-white mb-2">Request Received</h3>
+          <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
             Thank you for reaching out. One of our packaging specialists in Dubai will contact you within 24 hours.
           </p>
         </motion.div>
@@ -86,11 +86,11 @@ export function LeadForm() {
   }
 
   return (
-    <div className="bg-card glass-card backdrop-blur-2xl  border border-border  rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
       {/* Progress Bar */}
-      <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-100 ">
+      <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-100 dark:bg-slate-800">
         <motion.div 
-          className="h-full bg-blue-600 "
+          className="h-full bg-blue-600 dark:bg-blue-500"
           initial={{ width: "50%" }}
           animate={{ width: `${(step / MAX_STEPS) * 100}%` }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
@@ -98,13 +98,13 @@ export function LeadForm() {
       </div>
 
       <div className="mb-8 mt-2">
-        <span className="text-sm font-semibold tracking-wider text-blue-600  uppercase">
+        <span className="text-sm font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">
           Step {step} of {MAX_STEPS}
         </span>
-        <h2 className="text-2xl md:text-3xl font-semibold text-foreground  mt-1">
+        <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white mt-1">
           {step === 1 ? "Your Details" : "Project Requirements"}
         </h2>
-        <p className="text-muted-foreground  mt-2">
+        <p className="text-slate-500 dark:text-slate-400 mt-2">
           {step === 1 ? "Tell us a bit about yourself so we can get back to you." : "Help us understand your packaging needs."}
         </p>
       </div>
@@ -123,24 +123,24 @@ export function LeadForm() {
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-medium text-foreground ">First Name</label>
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">First Name</label>
                     <input
                       {...register("firstName")}
                       className={cn(
-                        "px-4 py-3 rounded-xl border bg-background  text-foreground  focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
-                        errors.firstName ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-border "
+                        "px-4 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
+                        errors.firstName ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 dark:border-slate-700"
                       )}
                       placeholder="John"
                     />
                     {errors.firstName && <span className="text-xs text-red-500">{errors.firstName.message}</span>}
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-medium text-foreground ">Last Name</label>
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Last Name</label>
                     <input
                       {...register("lastName")}
                       className={cn(
-                        "px-4 py-3 rounded-xl border bg-background  text-foreground  focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
-                        errors.lastName ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-border "
+                        "px-4 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
+                        errors.lastName ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 dark:border-slate-700"
                       )}
                       placeholder="Doe"
                     />
@@ -149,13 +149,13 @@ export function LeadForm() {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-foreground ">Email Address</label>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
                   <input
                     {...register("email")}
                     type="email"
                     className={cn(
-                      "px-4 py-3 rounded-xl border bg-background  text-foreground  focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
-                      errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-border "
+                      "px-4 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
+                      errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 dark:border-slate-700"
                     )}
                     placeholder="john@example.com"
                   />
@@ -163,13 +163,13 @@ export function LeadForm() {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-foreground ">Phone / WhatsApp</label>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Phone / WhatsApp</label>
                   <input
                     {...register("phone")}
                     type="tel"
                     className={cn(
-                      "px-4 py-3 rounded-xl border bg-background  text-foreground  focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
-                      errors.phone ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-border "
+                      "px-4 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
+                      errors.phone ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 dark:border-slate-700"
                     )}
                     placeholder="+971 50 123 4567"
                   />
@@ -188,12 +188,12 @@ export function LeadForm() {
                 className="flex flex-col gap-5 absolute inset-0"
               >
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-foreground ">Business Name</label>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Business Name</label>
                   <input
                     {...register("businessName")}
                     className={cn(
-                      "px-4 py-3 rounded-xl border bg-background  text-foreground  focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
-                      errors.businessName ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-border "
+                      "px-4 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none",
+                      errors.businessName ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 dark:border-slate-700"
                     )}
                     placeholder="Your Company LLC"
                   />
@@ -201,13 +201,13 @@ export function LeadForm() {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                   <label className="text-sm font-medium text-foreground ">Estimated Budget (AED)</label>
+                   <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Estimated Budget (AED)</label>
                    <div className="relative">
                      <select
                        {...register("budget")}
                        className={cn(
-                         "w-full px-4 py-3 rounded-xl border bg-background  text-foreground  focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none appearance-none",
-                         errors.budget ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-border "
+                         "w-full px-4 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none appearance-none",
+                         errors.budget ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 dark:border-slate-700"
                        )}
                      >
                        <option value="" disabled>Select a budget range...</option>
@@ -224,13 +224,13 @@ export function LeadForm() {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-foreground ">Packaging Requirements</label>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Packaging Requirements</label>
                   <textarea
                     {...register("requirements")}
                     rows={4}
                     className={cn(
-                      "px-4 py-3 rounded-xl border bg-background  text-foreground  focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none resize-none",
-                      errors.requirements ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-border "
+                      "px-4 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none resize-none",
+                      errors.requirements ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 dark:border-slate-700"
                     )}
                     placeholder="E.g., 5000 custom corrugated boxes for cosmetic products..."
                   />
@@ -241,12 +241,12 @@ export function LeadForm() {
           </AnimatePresence>
         </div>
 
-        <div className="flex items-center gap-4 mt-8 pt-6 border-t border-border ">
+        <div className="flex items-center gap-4 mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
           {step > 1 && (
             <button
               type="button"
               onClick={prevStep}
-              className="px-6 py-3 rounded-xl border border-border  text-foreground  font-medium hover:bg-muted transition-colors"
+              className="px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
             >
               Back
             </button>
@@ -264,7 +264,7 @@ export function LeadForm() {
           ) : (
             <button
               type="submit"
-              className="flex-1 bg-primary glass-card backdrop-blur-2xl hover:bg-primary-light text-primary-foreground px-6 py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-lg"
+              className="flex-1 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-6 py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-lg"
             >
               Submit Request
               <Send className="w-4 h-4" />

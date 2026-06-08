@@ -1,6 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum DpAuthLevel {
   unauthenticated(0),
@@ -16,60 +14,37 @@ enum DpAuthLevel {
 
 class AuthState {
   final DpAuthLevel authLevel;
-  final User? user;
+  final String? token;
 
-  const AuthState({this.authLevel = DpAuthLevel.unauthenticated, this.user});
+  const AuthState({this.authLevel = DpAuthLevel.unauthenticated, this.token});
 
-  bool get isAuthenticated => authLevel.level > 0 && user != null;
+  bool get isAuthenticated => authLevel.level > 0;
 }
 
-class AuthNotifier extends Notifier<AuthState> {
-  @override
-  AuthState build() {
-    _init();
-    return const AuthState();
+class AuthNotifier extends StateNotifier<AuthState> {
+  AuthNotifier() : super(const AuthState());
+
+  void login(String username, String password) {
+    // In a real app, you would make an API call here and decode the JWT
+    // For now, we simulate different roles based on the username
+    DpAuthLevel level = DpAuthLevel.unauthenticated;
+    
+    if (username.contains('user')) {
+      level = DpAuthLevel.l1User;
+    } else if (username.contains('member')) level = DpAuthLevel.l2Member;
+    else if (username.contains('staff')) level = DpAuthLevel.l3Staff;
+    else if (username.contains('admin')) level = DpAuthLevel.l4Admin;
+    else if (username.contains('dev')) level = DpAuthLevel.l5Developer;
+    else level = DpAuthLevel.l1User; // default fallback
+
+    state = AuthState(authLevel: level, token: 'mock_jwt_token_for_${level.name}');
   }
 
-  void _init() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-      if (user == null) {
-        state = const AuthState();
-      } else {
-        // Fetch role from Firestore
-        try {
-          final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-          DpAuthLevel level = DpAuthLevel.l1User; // default
-          if (doc.exists) {
-            final data = doc.data();
-            final role = data?['role']?.toString().toLowerCase() ?? 'user';
-            
-            if (role == 'admin') {
-              level = DpAuthLevel.l4Admin;
-            } else if (role == 'staff') {
-              level = DpAuthLevel.l3Staff;
-            } else if (role == 'member') {
-              level = DpAuthLevel.l2Member;
-            } else if (role == 'developer') {
-              level = DpAuthLevel.l5Developer;
-            }
-          }
-          state = AuthState(authLevel: level, user: user);
-        } catch (e) {
-          state = AuthState(authLevel: DpAuthLevel.l1User, user: user); // Fallback to basic user
-        }
-      }
-    });
-  }
-
-  Future<void> login(String email, String password) async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-  }
-
-  Future<void> logout() async {
-    await FirebaseAuth.instance.signOut();
+  void logout() {
+    state = const AuthState();
   }
 }
 
-final authProvider = NotifierProvider<AuthNotifier, AuthState>(() {
+final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   return AuthNotifier();
 });

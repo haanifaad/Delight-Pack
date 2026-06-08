@@ -46,10 +46,10 @@ export function DesignFileUpload({ files, onFilesChange, error }: DesignFileUplo
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <label className="text-sm font-medium text-foreground dark:text-slate-300">
+        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
           Custom print designs <span className="text-slate-400 font-normal">(optional)</span>
         </label>
-        <p className="text-xs text-muted-foreground dark:text-slate-400 mt-1">
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
           Upload artwork, logos, or dielines — PNG, JPEG, WebP, SVG, or PDF up to 10 MB each.
         </p>
       </div>
@@ -59,7 +59,7 @@ export function DesignFileUpload({ files, onFilesChange, error }: DesignFileUplo
           "relative flex flex-col items-center justify-center w-full min-h-[140px] rounded-xl border-2 border-dashed transition-colors cursor-pointer",
           dragActive
             ? "border-blue-500 bg-blue-50 dark:bg-blue-950/30"
-            : "border-border dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-background dark:bg-slate-800/50"
+            : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-slate-50 dark:bg-slate-800/50"
         )}
         onDragEnter={(e) => { e.preventDefault(); setDragActive(true); }}
         onDragLeave={(e) => { e.preventDefault(); setDragActive(false); }}
@@ -83,10 +83,10 @@ export function DesignFileUpload({ files, onFilesChange, error }: DesignFileUplo
           className="hidden"
         />
         <UploadCloud className="w-9 h-9 text-slate-400 mb-2" />
-        <p className="text-sm text-muted-foreground dark:text-slate-300 font-medium">
+        <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
           <span className="text-blue-600 dark:text-blue-400">Click to upload</span> or drag and drop
         </p>
-        <p className="text-xs text-muted-foreground mt-1">{files.length} / {MAX_FILES} files</p>
+        <p className="text-xs text-slate-500 mt-1">{files.length} / {MAX_FILES} files</p>
       </div>
 
       {files.length > 0 && (
@@ -94,15 +94,15 @@ export function DesignFileUpload({ files, onFilesChange, error }: DesignFileUplo
           {files.map((file, index) => (
             <li
               key={`${file.name}-${file.size}-${index}`}
-              className="flex items-center justify-between p-3 bg-card glass-card backdrop-blur-2xl dark:bg-slate-800 border border-border dark:border-slate-700 rounded-xl"
+              className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div className="flex-shrink-0 p-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
                   <FileIcon className="w-5 h-5" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-foreground dark:text-white truncate">{file.name}</p>
-                  <p className="text-xs text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white truncate">{file.name}</p>
+                  <p className="text-xs text-slate-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                 </div>
               </div>
               <button

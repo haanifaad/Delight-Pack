@@ -11,8 +11,8 @@ export async function registerUser(req: Request, res: Response) {
       return res.status(400).json({ error: 'Email, password, and roleLevel are required' });
     }
 
-    if (roleLevel < 1 || roleLevel > 6) {
-      return res.status(400).json({ error: 'Role level must be between 1 and 6' });
+    if (roleLevel < 1 || roleLevel > 5) {
+      return res.status(400).json({ error: 'Role level must be between 1 and 5' });
     }
 
     const db = getDbPool();

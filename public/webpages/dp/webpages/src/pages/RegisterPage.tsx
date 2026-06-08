@@ -127,7 +127,7 @@ export function RegisterPage() {
             </Button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-muted-foreground">
+          <p className="mt-6 text-center text-sm text-slate-500">
             Already registered?{' '}
             <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
               Sign in

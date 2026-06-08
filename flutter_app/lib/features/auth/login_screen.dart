@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/auth/auth_service.dart';
+import '../auth/auth_service.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});

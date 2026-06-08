@@ -4,7 +4,7 @@ export function MobileAppPromo() {
   return (
     <section className="mt-8 border border-b2b-gray rounded-2xl p-8 md:p-12 bg-gradient-to-b from-obsidian-black to-[#050505] relative overflow-hidden">
       
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-card glass-card backdrop-blur-2xl/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
         <div className="flex-1 flex flex-col gap-8">
@@ -55,7 +55,7 @@ export function MobileAppPromo() {
             <div className="mt-6 flex flex-col gap-4 flex-grow">
               <div className="flex justify-between items-center pb-4 border-b border-b2b-gray">
                 <div>
-                  <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Live Status</div>
+                  <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Live Status</div>
                   <div className="text-sm font-semibold text-editorial-white">Factory Floor Alpha</div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -84,7 +84,7 @@ export function MobileAppPromo() {
                      </div>
                      <div>
                        <div className="text-sm text-editorial-white">Inventory Low: Box A</div>
-                       <div className="text-[10px] text-muted-foreground">2 mins ago</div>
+                       <div className="text-[10px] text-slate-500">2 mins ago</div>
                      </div>
                    </div>
                    <div className="flex items-center gap-3">
@@ -93,7 +93,7 @@ export function MobileAppPromo() {
                      </div>
                      <div>
                        <div className="text-sm text-editorial-white">Order #892 Approved</div>
-                       <div className="text-[10px] text-muted-foreground">14 mins ago</div>
+                       <div className="text-[10px] text-slate-500">14 mins ago</div>
                      </div>
                    </div>
                  </div>
