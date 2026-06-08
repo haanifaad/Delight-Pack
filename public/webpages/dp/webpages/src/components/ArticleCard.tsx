@@ -17,7 +17,7 @@ export function ArticleCard({ post, onClick }: ArticleCardProps) {
 
   return (
     <article 
-      className="group cursor-pointer flex flex-col h-full bg-white border border-stone-200 rounded-xl overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1"
+      className="group cursor-pointer flex flex-col h-full bg-card glass-card backdrop-blur-2xl border border-stone-200 rounded-xl overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1"
       onClick={() => onClick(post.id)}
       role="link"
       tabIndex={0}

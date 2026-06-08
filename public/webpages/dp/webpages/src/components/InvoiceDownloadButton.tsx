@@ -75,7 +75,7 @@ export function InvoiceDownloadButton({ orderId, email, className }: InvoiceDown
 
   if (isLoading) {
     return (
-      <div className={`flex items-center justify-center gap-2 text-sm text-slate-500 ${className ?? ""}`}>
+      <div className={`flex items-center justify-center gap-2 text-sm text-muted-foreground ${className ?? ""}`}>
         <Loader2 className="w-4 h-4 animate-spin" />
         Checking invoice…
       </div>
@@ -84,7 +84,7 @@ export function InvoiceDownloadButton({ orderId, email, className }: InvoiceDown
 
   if (status !== "completed") {
     return (
-      <div className={`rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4 text-sm text-slate-600 dark:text-slate-400 ${className ?? ""}`}>
+      <div className={`rounded-xl border border-border dark:border-slate-700 bg-background dark:bg-slate-800/50 p-4 text-sm text-muted-foreground dark:text-slate-400 ${className ?? ""}`}>
         <div className="flex items-start gap-3">
           <FileText className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
           <p>
@@ -117,7 +117,7 @@ export function InvoiceDownloadButton({ orderId, email, className }: InvoiceDown
   return (
     <div className={`flex flex-col items-center gap-3 ${className ?? ""}`}>
       {invoiceNumber && (
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-xs text-muted-foreground dark:text-slate-400">
           Invoice <span className="font-mono font-medium">{invoiceNumber}</span>
         </p>
       )}

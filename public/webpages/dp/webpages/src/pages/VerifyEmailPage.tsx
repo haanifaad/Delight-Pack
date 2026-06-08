@@ -74,7 +74,7 @@ export function VerifyEmailPage() {
       <Card className="shadow-md">
         <CardContent className="pt-6 space-y-4 text-center">
           <MailCheck className="mx-auto h-12 w-12 text-indigo-600" aria-hidden="true" />
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-muted-foreground">
             We sent a verification link to <strong>{user.email}</strong>. Open the link, then
             return here and confirm.
           </p>
@@ -119,7 +119,7 @@ export function VerifyEmailPage() {
           <button
             type="button"
             onClick={() => signOut()}
-            className="text-sm text-slate-500 hover:text-slate-700"
+            className="text-sm text-muted-foreground hover:text-foreground"
           >
             Sign out and use a different account
           </button>

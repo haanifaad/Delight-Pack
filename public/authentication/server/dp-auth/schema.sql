@@ -24,6 +24,18 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_refresh_tokens_token ON refresh_tokens(token);
 
+-- Tally Prime stock items synced from local bridge
+CREATE TABLE IF NOT EXISTS tally_stock_items (
+    id SERIAL PRIMARY KEY,
+    item_name VARCHAR(255) UNIQUE NOT NULL,
+    closing_balance NUMERIC(18, 4) DEFAULT 0,
+    base_units VARCHAR(50),
+    last_synced_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_tally_stock_items_name ON tally_stock_items(item_name);
+
 -- Role Levels Reference:
 -- 1: User (External clients/guests)
 -- 2: Member (Sales reps/Customer service)

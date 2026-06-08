@@ -23,9 +23,11 @@ class AuthState {
   bool get isAuthenticated => authLevel.level > 0 && user != null;
 }
 
-class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier() : super(const AuthState()) {
+class AuthNotifier extends Notifier<AuthState> {
+  @override
+  AuthState build() {
     _init();
+    return const AuthState();
   }
 
   void _init() {
@@ -41,10 +43,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
             final data = doc.data();
             final role = data?['role']?.toString().toLowerCase() ?? 'user';
             
-            if (role == 'admin') level = DpAuthLevel.l4Admin;
-            else if (role == 'staff') level = DpAuthLevel.l3Staff;
-            else if (role == 'member') level = DpAuthLevel.l2Member;
-            else if (role == 'developer') level = DpAuthLevel.l5Developer;
+            if (role == 'admin') {
+              level = DpAuthLevel.l4Admin;
+            } else if (role == 'staff') {
+              level = DpAuthLevel.l3Staff;
+            } else if (role == 'member') {
+              level = DpAuthLevel.l2Member;
+            } else if (role == 'developer') {
+              level = DpAuthLevel.l5Developer;
+            }
           }
           state = AuthState(authLevel: level, user: user);
         } catch (e) {
@@ -63,6 +70,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 }
 
-final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
+final authProvider = NotifierProvider<AuthNotifier, AuthState>(() {
   return AuthNotifier();
 });

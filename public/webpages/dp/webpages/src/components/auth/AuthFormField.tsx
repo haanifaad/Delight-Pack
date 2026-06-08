@@ -27,7 +27,7 @@ export function AuthFormField({
 }: AuthFormFieldProps) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="block text-sm font-medium text-slate-700">
+      <label htmlFor={id} className="block text-sm font-medium text-foreground">
         {label}
       </label>
       <input
@@ -42,14 +42,14 @@ export function AuthFormField({
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : hint ? `${id}-hint` : undefined}
         className={cn(
-          'block w-full rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition-colors',
+          'block w-full rounded-lg border bg-card glass-card backdrop-blur-2xl px-3 py-2 text-sm text-foreground shadow-sm outline-none transition-colors',
           'placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20',
-          'disabled:cursor-not-allowed disabled:bg-slate-50 disabled:opacity-60',
-          error ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200',
+          'disabled:cursor-not-allowed disabled:bg-background disabled:opacity-60',
+          error ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-border',
         )}
       />
       {hint && !error && (
-        <p id={`${id}-hint`} className="text-xs text-slate-500">
+        <p id={`${id}-hint`} className="text-xs text-muted-foreground">
           {hint}
         </p>
       )}

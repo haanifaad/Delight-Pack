@@ -96,7 +96,7 @@ export function LoginPage() {
             </Button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-slate-500">
+          <p className="mt-6 text-center text-sm text-muted-foreground">
             New business client?{' '}
             <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
               Create an account

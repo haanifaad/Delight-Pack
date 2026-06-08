@@ -39,7 +39,7 @@ export function ResetPasswordPage() {
           {success ? (
             <div className="space-y-4 text-center">
               <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" aria-hidden="true" />
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-muted-foreground">
                 If an account exists for <strong>{email}</strong>, you will receive a password
                 reset email shortly. Check your inbox and spam folder.
               </p>
@@ -87,7 +87,7 @@ export function ResetPasswordPage() {
                 )}
               </Button>
 
-              <p className="text-center text-sm text-slate-500">
+              <p className="text-center text-sm text-muted-foreground">
                 <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Back to sign in
                 </Link>

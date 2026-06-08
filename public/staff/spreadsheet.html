@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delight Pack - Inventory Ledger</title>
+  
+  <!-- Critical Auth Check -->
+  <script src="./js/staff-auth.js"></script>
+
+  <!-- Tailwind CSS v4 via CDN -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Core Spreadsheet Engine -->
+  <script src="./js/tally-spreadsheet.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: var(--primary);
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-border: var(--border);
+      --color-muted: var(--muted);
+      --color-muted-foreground: var(--muted-foreground);
+    }
+    :root {
+      --primary: #f59e0b; /* Amber/Orange for high velocity highlights */
+      --background: #0f172a;
+      --foreground: #f8fafc;
+      --card: #1e293b;
+      --border: #334155;
+      --muted: #334155;
+      --muted-foreground: #94a3b8;
+    }
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: 'Inter', sans-serif;
+      /* Disable overscroll bounce for a native feel */
+      overscroll-behavior: none;
+    }
+
+    /* Tally Data Grid Styling */
+    .tally-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+    }
+    
+    .tally-table th {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      color: var(--muted-foreground);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+    }
+
+    .tally-table td {
+      border: 1px solid var(--border);
+      background-color: var(--background);
+      padding: 0;
+      position: relative;
+    }
+
+    /* Keyboard-first cell styling */
+    .tally-cell {
+      width: 100%;
+      height: 100%;
+      padding: 0.75rem 1rem;
+      background: transparent;
+      border: 2px solid transparent; /* Reserve space for focus ring */
+      color: var(--foreground);
+      outline: none;
+      transition: border-color 0.1s, background-color 0.1s;
+    }
+
+    /* Tally "High-Contrast" Focus State */
+    .tally-cell:focus {
+      border-color: var(--primary);
+      background-color: rgba(245, 158, 11, 0.1);
+      color: #fff;
+    }
+
+    /* Shortcut Command Bar */
+    .command-bar {
+      border-top: 1px solid var(--border);
+      background-color: var(--card);
+      padding: 0.5rem 1rem;
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .cmd-key {
+      color: var(--primary);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- App Header -->
+  <header class="flex items-center justify-between border-b border-border p-4 bg-card">
+    <div class="flex items-center gap-4">
+      <a href="./index.html" class="p-2 hover:bg-muted rounded-md transition-colors">
+        <i data-lucide="arrow-left" class="w-5 h-5 text-muted-foreground"></i>
+      </a>
+      <div class="flex items-center gap-3">
+        <div class="bg-amber-500/20 p-2 rounded-lg border border-amber-500/30">
+          <i data-lucide="calculator" class="w-5 h-5 text-amber-500"></i>
+        </div>
+        <div>
+          <h1 class="text-base font-bold tracking-tight text-white">Inventory Ledger Engine</h1>
+          <p class="text-xs text-amber-500 font-medium">Dubai Factory Floor &bull; High Velocity Entry Mode</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-4">
+      <div class="px-3 py-1.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+        <span class="text-xs font-medium text-emerald-400">Database Synced</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Spreadsheet Container -->
+  <main class="flex-grow p-4 md:p-8 flex flex-col">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold font-inter">Material Intake Voucher (VCH-8924)</h2>
+      <div class="text-sm text-muted-foreground">Date: <span class="text-foreground">07 Jun 2026</span></div>
+    </div>
+
+    <!-- The Grid -->
+    <div class="bg-card border border-border rounded-xl shadow-2xl overflow-hidden flex-grow flex flex-col">
+      <div class="overflow-x-auto flex-grow">
+        <table id="tally-grid" class="tally-table h-full">
+          <thead>
+            <tr>
+              <th class="w-12 text-center">#</th>
+              <th class="w-1/3">Item / Ledger Name</th>
+              <th class="w-32">Location</th>
+              <th class="w-32">Qty (Inline Calc)</th>
+              <th class="w-32">Rate (AED)</th>
+              <th class="w-40">Amount (AED)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 15 Rows of Data Entry for fast sequential input -->
+            <!-- We generate rows directly in HTML for simplicity, though React/Next would map this -->
+            <script>
+              for(let i=1; i<=15; i++) {
+                document.write(`
+                  <tr>
+                    <td class="text-center text-muted-foreground">${i}</td>
+                    <td><input type="text" class="tally-cell" data-col="name" placeholder="${i === 1 ? 'e.g. Standard Cardboard Roll' : ''}"></td>
+                    <td><input type="text" class="tally-cell" data-col="location" placeholder="${i === 1 ? 'Zone A' : ''}"></td>
+                    <td><input type="text" class="tally-cell" data-col="qty" placeholder="0"></td>
+                    <td><input type="text" class="tally-cell" data-col="rate" placeholder="0.00"></td>
+                    <td><input type="text" class="tally-cell font-semibold text-amber-500" data-col="amount" placeholder="0.00"></td>
+                  </tr>
+                `);
+              }
+            </script>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Voucher Totals -->
+      <div class="bg-card border-t border-border p-4 flex justify-between items-center px-6">
+        <div class="text-sm font-medium text-muted-foreground">VOUCHER TOTALS</div>
+        <div class="flex gap-16 text-right">
+          <div>
+            <div class="text-xs text-muted-foreground mb-1 uppercase">Total Qty</div>
+            <div class="text-lg font-bold font-mono" id="total-qty">0</div>
+          </div>
+          <div>
+            <div class="text-xs text-muted-foreground mb-1 uppercase">Total Amount</div>
+            <div class="text-lg font-bold font-mono text-amber-500" id="total-amount">0.00 AED</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Persistent Command Bar -->
+  <footer class="command-bar sticky bottom-0">
+    <div><span class="cmd-key">Enter / Arrows</span> Move Cell</div>
+    <div><span class="cmd-key">Tab</span> Next</div>
+    <div><span class="cmd-key">Esc</span> Cancel Edit</div>
+    <div><span class="cmd-key">Alt+S</span> Save Voucher & Sync Sheets</div>
+    <div><span class="cmd-key">Ctrl+P</span> Print Receipt</div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #e60000;
+  --color-brand-hover: #cc0000;
+  --color-background-gray: #f4f4f5;
+  --color-card: #ffffff;
+  --font-sans: "Inter", "Helvetica Neue", "Arial", sans-serif;
+}
+
+body {
+  background-color: var(--color-background-gray);
+  color: #1a1a1a;
+  margin: 0;
+  font-family: var(--font-sans);
+  overflow: hidden; /* For kiosk full-screen feel */
+}
+
+/* Custom scrollbar for sidebar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}

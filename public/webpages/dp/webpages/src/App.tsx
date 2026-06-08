@@ -8,6 +8,10 @@ import { VerifyEmailPage } from '@/src/pages/VerifyEmailPage';
 import { DashboardPage } from '@/src/pages/DashboardPage';
 import { PlaceholderPage } from '@/src/pages/PlaceholderPage';
 import { HomePage } from '@/src/pages/HomePage';
+import { CustomerPortalPage } from '@/src/pages/CustomerPortalPage';
+import { CareersPage } from '@/src/pages/CareersPage';
+
+import ContactApp from './App(2)';
 
 export default function App() {
   return (
@@ -16,10 +20,11 @@ export default function App() {
       <Route path="/register" element={<GuestRoute><RegisterPage /></GuestRoute>} />
       <Route path="/reset-password" element={<GuestRoute><ResetPasswordPage /></GuestRoute>} />
       <Route path="/verify-email" element={<VerifyEmailPage />} />
-      <Route path="/careers" element={<PlaceholderPage title="Careers Hub" description="Join the Team. Explore Factory Floor, Logistics, & Internships" />} />
-      <Route path="/contact" element={<PlaceholderPage title="Contact & Inquiries" description="Direct Dubai Workspace Location & WhatsApp Integration" />} />
+      <Route path="/portal" element={<CustomerPortalPage />} />
+      <Route path="/careers" element={<CareersPage />} />
+      <Route path="/contact" element={<ContactApp />} />
 
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route
         path="/dashboard"
         element={

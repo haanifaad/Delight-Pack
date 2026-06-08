@@ -62,10 +62,10 @@ const STEP_META = [
 
 function inputClass(hasError: boolean) {
   return cn(
-    "px-4 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none w-full",
+    "px-4 py-3 rounded-xl border bg-background dark:bg-slate-800/50 text-foreground dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors outline-none w-full",
     hasError
       ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-      : "border-slate-200 dark:border-slate-700"
+      : "border-border dark:border-slate-700"
   );
 }
 
@@ -164,7 +164,7 @@ export function CustomPackagingForm() {
 
   if (submittedOrderId) {
     return (
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-12 shadow-xl flex flex-col items-center justify-center text-center min-h-[480px]">
+      <div className="bg-card glass-card backdrop-blur-2xl dark:bg-primary border border-border dark:border-slate-800 rounded-3xl p-8 sm:p-12 shadow-xl flex flex-col items-center justify-center text-center min-h-[480px]">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -173,13 +173,13 @@ export function CustomPackagingForm() {
           <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
           </div>
-          <h3 className="text-2xl font-semibold text-slate-900 dark:text-white mb-2">
+          <h3 className="text-2xl font-semibold text-foreground dark:text-white mb-2">
             Custom packaging request received
           </h3>
-          <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto mb-4">
+          <p className="text-muted-foreground dark:text-slate-400 max-w-md mx-auto mb-4">
             Our specialists will review your specifications and contact you within 1 business day.
           </p>
-          <p className="text-sm font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg inline-block">
+          <p className="text-sm font-mono text-muted-foreground dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg inline-block">
             Ref: {submittedOrderId.slice(0, 8).toUpperCase()}
           </p>
           {emailSent && (
@@ -200,7 +200,7 @@ export function CustomPackagingForm() {
   const StepIcon = STEP_META[step - 1].icon;
 
   return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+    <div className="bg-card glass-card backdrop-blur-2xl dark:bg-primary border border-border dark:border-slate-800 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-100 dark:bg-slate-800">
         <motion.div
           className="h-full bg-blue-600 dark:bg-blue-500"
@@ -218,10 +218,10 @@ export function CustomPackagingForm() {
             <StepIcon className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">
+            <h2 className="text-2xl md:text-3xl font-semibold text-foreground dark:text-white">
               {STEP_META[step - 1].title}
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">
+            <p className="text-muted-foreground dark:text-slate-400 text-sm mt-0.5">
               {STEP_META[step - 1].subtitle}
             </p>
           </div>
@@ -241,28 +241,28 @@ export function CustomPackagingForm() {
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">First name</label>
+                    <label className="text-sm font-medium text-foreground dark:text-slate-300">First name</label>
                     <input {...register("firstName")} className={inputClass(!!errors.firstName)} placeholder="John" />
                     {errors.firstName && <span className="text-xs text-red-500">{errors.firstName.message}</span>}
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Last name</label>
+                    <label className="text-sm font-medium text-foreground dark:text-slate-300">Last name</label>
                     <input {...register("lastName")} className={inputClass(!!errors.lastName)} placeholder="Doe" />
                     {errors.lastName && <span className="text-xs text-red-500">{errors.lastName.message}</span>}
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
+                  <label className="text-sm font-medium text-foreground dark:text-slate-300">Email</label>
                   <input {...register("email")} type="email" className={inputClass(!!errors.email)} placeholder="john@company.ae" />
                   {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Phone / WhatsApp</label>
+                  <label className="text-sm font-medium text-foreground dark:text-slate-300">Phone / WhatsApp</label>
                   <input {...register("phone")} type="tel" className={inputClass(!!errors.phone)} placeholder="+971 50 123 4567" />
                   {errors.phone && <span className="text-xs text-red-500">{errors.phone.message}</span>}
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Company</label>
+                  <label className="text-sm font-medium text-foreground dark:text-slate-300">Company</label>
                   <input {...register("company")} className={inputClass(!!errors.company)} placeholder="Your Company LLC" />
                   {errors.company && <span className="text-xs text-red-500">{errors.company.message}</span>}
                 </div>
@@ -280,7 +280,7 @@ export function CustomPackagingForm() {
                 <div className="grid grid-cols-3 gap-4">
                   {(["length", "width", "height"] as const).map((field) => (
                     <div key={field} className="flex flex-col gap-1.5">
-                      <label className="text-sm font-medium text-slate-700 dark:text-slate-300 capitalize">{field}</label>
+                      <label className="text-sm font-medium text-foreground dark:text-slate-300 capitalize">{field}</label>
                       <input
                         {...register(field)}
                         type="number"
@@ -295,7 +295,7 @@ export function CustomPackagingForm() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Unit</label>
+                    <label className="text-sm font-medium text-foreground dark:text-slate-300">Unit</label>
                     <select {...register("unit")} className={inputClass(false)}>
                       <option value="cm">Centimeters (cm)</option>
                       <option value="mm">Millimeters (mm)</option>
@@ -303,7 +303,7 @@ export function CustomPackagingForm() {
                     </select>
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Quantity</label>
+                    <label className="text-sm font-medium text-foreground dark:text-slate-300">Quantity</label>
                     <input
                       {...register("quantity")}
                       type="number"
@@ -314,7 +314,7 @@ export function CustomPackagingForm() {
                     {errors.quantity && <span className="text-xs text-red-500">{errors.quantity.message}</span>}
                   </div>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-muted-foreground dark:text-slate-400">
                   Enter inner box dimensions unless you need outer shipping dimensions — note that in material notes on the next step.
                 </p>
               </motion.div>
@@ -340,7 +340,7 @@ export function CustomPackagingForm() {
                             "flex items-start gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all",
                             field.value === option.value
                               ? "border-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:border-blue-500"
-                              : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                              : "border-border dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                           )}
                         >
                           <input
@@ -351,8 +351,8 @@ export function CustomPackagingForm() {
                             onChange={() => field.onChange(option.value)}
                           />
                           <div>
-                            <p className="font-medium text-slate-900 dark:text-white">{option.label}</p>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">{option.description}</p>
+                            <p className="font-medium text-foreground dark:text-white">{option.label}</p>
+                            <p className="text-sm text-muted-foreground dark:text-slate-400">{option.description}</p>
                           </div>
                         </label>
                       ))}
@@ -364,7 +364,7 @@ export function CustomPackagingForm() {
                 )}
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <label className="text-sm font-medium text-foreground dark:text-slate-300">
                     Additional notes <span className="text-slate-400 font-normal">(optional)</span>
                   </label>
                   <textarea
@@ -392,7 +392,7 @@ export function CustomPackagingForm() {
                 <DesignFileUpload files={designFiles} onFilesChange={setDesignFiles} />
 
                 <div>
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3 block">
+                  <label className="text-sm font-medium text-foreground dark:text-slate-300 mb-3 block">
                     Delivery urgency
                   </label>
                   <Controller
@@ -407,7 +407,7 @@ export function CustomPackagingForm() {
                               "flex flex-col p-4 rounded-xl border-2 cursor-pointer text-center transition-all",
                               field.value === option.value
                                 ? "border-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:border-blue-500"
-                                : "border-slate-200 dark:border-slate-700 hover:border-slate-300"
+                                : "border-border dark:border-slate-700 hover:border-slate-300"
                             )}
                           >
                             <input
@@ -417,8 +417,8 @@ export function CustomPackagingForm() {
                               checked={field.value === option.value}
                               onChange={() => field.onChange(option.value)}
                             />
-                            <span className="font-semibold text-slate-900 dark:text-white">{option.label}</span>
-                            <span className="text-xs text-slate-500 dark:text-slate-400 mt-1">{option.description}</span>
+                            <span className="font-semibold text-foreground dark:text-white">{option.label}</span>
+                            <span className="text-xs text-muted-foreground dark:text-slate-400 mt-1">{option.description}</span>
                           </label>
                         ))}
                       </div>
@@ -440,13 +440,13 @@ export function CustomPackagingForm() {
           </div>
         )}
 
-        <div className="flex items-center gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-4 pt-6 border-t border-border dark:border-slate-800">
           {step > 1 && (
             <button
               type="button"
               onClick={prevStep}
               disabled={isSubmitting}
-              className="px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
+              className="px-6 py-3 rounded-xl border border-border dark:border-slate-700 text-foreground dark:text-slate-300 font-medium hover:bg-background dark:hover:bg-primary-light transition-colors disabled:opacity-50"
             >
               Back
             </button>
@@ -465,7 +465,7 @@ export function CustomPackagingForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-6 py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-lg disabled:opacity-60"
+              className="flex-1 bg-primary dark:bg-card glass-card backdrop-blur-2xl hover:bg-primary-light dark:hover:bg-slate-100 text-white dark:text-foreground px-6 py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-lg disabled:opacity-60"
             >
               {isSubmitting ? (
                 <>

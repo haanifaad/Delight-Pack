@@ -1,6 +1,0 @@
-{
-  "name": "Smart Factory Dashboard",
-  "description": "Live factory floor monitoring with IoT integration for temperature sensors and box counters.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

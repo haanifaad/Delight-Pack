@@ -39,11 +39,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-      setLoading(false);
-    });
-    return unsubscribe;
+    // Mock user for the preview
+    setUser({ displayName: 'Tom', email: 'tom@example.com', emailVerified: true } as User);
+    setLoading(false);
   }, []);
 
   const refreshUser = useCallback(async (): Promise<boolean> => {

@@ -27,7 +27,7 @@ export function BlogIndex({ posts, onSelectPost }: BlogIndexProps) {
         {featuredPost && (
           <section className="mb-12 md:mb-16" aria-label="Featured Article">
             <div 
-              className="group cursor-pointer grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center bg-white rounded-2xl p-6 md:p-8 lg:p-10 border border-stone-200 shadow-sm transition-shadow hover:shadow-xl"
+              className="group cursor-pointer grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center bg-card glass-card backdrop-blur-2xl rounded-2xl p-6 md:p-8 lg:p-10 border border-stone-200 shadow-sm transition-shadow hover:shadow-xl"
               onClick={() => onSelectPost(featuredPost.id)}
               role="link"
               tabIndex={0}

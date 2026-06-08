@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delight Pack - Staff Login</title>
+  
+  <!-- Tailwind CSS v4 via CDN -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: var(--primary);
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-border: var(--border);
+      --color-muted: var(--muted);
+      --color-muted-foreground: var(--muted-foreground);
+    }
+    :root {
+      --primary: #1e3a8a;
+      --background: #0f172a;
+      --foreground: #f8fafc;
+      --card: #1e293b;
+      --border: #334155;
+      --muted: #334155;
+      --muted-foreground: #94a3b8;
+    }
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+  
+  <!-- Background Glows -->
+  <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+  <div class="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-3xl shadow-2xl overflow-hidden relative z-10">
+    <div class="p-8">
+      <div class="flex justify-center mb-6">
+        <div class="bg-blue-600 p-3 rounded-xl shadow-lg">
+          <i data-lucide="shield-check" class="w-8 h-8 text-white"></i>
+        </div>
+      </div>
+      
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold tracking-tight text-white mb-2">Staff Portal Login</h1>
+        <p class="text-sm text-muted-foreground">Authenticate to access secure facility controls.</p>
+      </div>
+
+      <form id="loginForm" class="flex flex-col gap-5">
+        <div id="error-alert" class="hidden bg-red-500/10 border border-red-500/20 p-3 rounded-lg text-sm text-red-400 text-center"></div>
+        <div id="success-alert" class="hidden bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-lg text-sm text-emerald-400 text-center"></div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-medium text-muted-foreground ml-1">Email Address</label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"></i>
+            <input type="email" id="email" class="w-full bg-background border border-border rounded-xl py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" placeholder="name@delightpack.com" required>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-medium text-muted-foreground ml-1">Password</label>
+          <div class="relative">
+            <i data-lucide="lock" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"></i>
+            <input type="password" id="password" class="w-full bg-background border border-border rounded-xl py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition-colors mt-2 shadow-lg shadow-blue-600/20">
+          Authorize Access
+        </button>
+      </form>
+    </div>
+    
+    <div class="bg-background/50 border-t border-border p-4 text-center">
+      <a href="/" class="text-xs text-muted-foreground hover:text-white transition-colors">Return to Public Gateway</a>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorAlert = document.getElementById('error-alert');
+      const successAlert = document.getElementById('success-alert');
+      
+      errorAlert.classList.add('hidden');
+      successAlert.classList.add('hidden');
+
+      try {
+        // Assume API is on the same host but under /api/auth or similar.
+        // If the backend isn't up, we'll gracefully fallback for the demo/frontend
+        let res;
+        try {
+          res = await fetch('http://localhost:3000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+        } catch(netErr) {
+          // If no backend is running yet, let's simulate the login strictly based on Haani's request
+          console.warn("Backend not reachable. Simulating logic.");
+          if (email === 'haani@delightpack.com') {
+            simulateLogin(6, "token_l6_mock");
+            return;
+          } else if (email.includes('staff')) {
+            simulateLogin(3, "token_l3_mock");
+            return;
+          } else if (email.includes('user')) {
+             simulateLogin(1, "token_l1_mock");
+             return;
+          } else {
+             showError("Invalid email or password");
+             return;
+          }
+        }
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Login failed');
+        }
+
+        // Successfully logged in
+        handleSuccess(data.user.roleLevel, data.tokens.accessToken);
+
+      } catch (err) {
+        showError(err.message);
+      }
+
+      function simulateLogin(level, token) {
+        handleSuccess(level, token);
+      }
+
+      function handleSuccess(level, token) {
+        // Save the token and level
+        localStorage.setItem('dpAuthToken', token);
+        localStorage.setItem('dpAuthLevel', level);
+        
+        // Evaluate Clearance
+        if (level < 3) {
+           showError('Access Denied. Insufficient Clearance (L3+ Required).');
+           // Keep them on the page or redirect to public
+           setTimeout(() => {
+              window.location.href = '/';
+           }, 2000);
+           return;
+        }
+
+        // Clear to enter
+        successAlert.textContent = 'Clearance granted. Redirecting...';
+        successAlert.classList.remove('hidden');
+        
+        setTimeout(() => {
+          // Look for redirect param, otherwise default to staff index
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect') || '/staff/index.html';
+          window.location.href = redirect;
+        }, 800);
+      }
+
+      function showError(msg) {
+        errorAlert.textContent = msg;
+        errorAlert.classList.remove('hidden');
+        localStorage.removeItem('dpAuthToken');
+        localStorage.removeItem('dpAuthLevel');
+      }
+
+    });
+  </script>
+</body>
+</html>

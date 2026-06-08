@@ -128,8 +128,89 @@
     }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.4s ease, color 0.4s ease;
     }
   html {
     @apply font-sans;
     }
 }
+
+/* DP Mode (Ultra Premium: Obsidian Black + Glassmorphism + DP Auras) */
+:root, [data-theme="dp"] {
+  --primary: #2563EB; 
+  --primary-light: #3b82f6;
+  --primary-dark: #1e3a8a;
+  --secondary: #DC2626;
+  --background: transparent; /* Allows DP Aura to show through */
+  --foreground: #fdfdfd;
+  --card: rgba(255, 255, 255, 0.02); /* Glassmorphism Base */
+  --card-hover: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.08); /* Frosted edges */
+  --muted: rgba(255, 255, 255, 0.05); 
+  --muted-foreground: #94a3b8;
+  --accent: #fdfdfd; 
+  color-scheme: dark;
+}
+
+/* Light Mode (Clean editorial white) */
+[data-theme="light"] {
+  --primary: #0f172a;
+  --primary-light: #334155;
+  --primary-dark: #020617;
+  --secondary: #475569;
+  --background: #ffffff;
+  --foreground: #1e293b;
+  --card: #f8fafc;
+  --card-hover: #f1f5f9;
+  --border: #cbd5e1;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0f172a;
+  color-scheme: light;
+}
+
+/* Dark Mode (Grayscale, pure black/white) */
+[data-theme="dark"] {
+  --primary: #ffffff; 
+  --primary-light: #f1f5f9;
+  --primary-dark: #cbd5e1;
+  --secondary: #94a3b8;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-hover: #111111;
+  --border: #1c1c1c;
+  --muted: #1c1c1c;
+  --muted-foreground: #a3a3a3;
+  --accent: #ffffff;
+  color-scheme: dark;
+}
+
+/* Cinematic Glass Card Hover Glow for DP Mode */
+[data-theme="dp"] .glass-card {
+  transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+[data-theme="dp"] .glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15), 0 0 30px -10px rgba(220, 38, 38, 0.15);
+}
+
+#dp-aura {
+  z-index: -10;
+  pointer-events: none;
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: #050505;
+}
+[data-theme="dp"] #dp-aura {
+  display: block;
+}
+
+.icon-accent {
+  color: var(--accent);
+}

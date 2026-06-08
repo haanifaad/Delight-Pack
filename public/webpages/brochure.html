@@ -742,6 +742,20 @@
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.drawImage(img, 0, 0, img.width, img.height,
                               centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
+
+            // Add a smooth white gradient mask on the left and right sides
+            // This hides the waste particles without having to manually edit all 336 frames
+            const gradientLeft = context.createLinearGradient(0, 0, canvas.width * 0.25, 0);
+            gradientLeft.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            gradientLeft.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            context.fillStyle = gradientLeft;
+            context.fillRect(0, 0, canvas.width * 0.25, canvas.height);
+
+            const gradientRight = context.createLinearGradient(canvas.width * 0.75, 0, canvas.width, 0);
+            gradientRight.addColorStop(0, 'rgba(255, 255, 255, 0)');
+            gradientRight.addColorStop(1, 'rgba(255, 255, 255, 1)');
+            context.fillStyle = gradientRight;
+            context.fillRect(canvas.width * 0.75, 0, canvas.width * 0.25, canvas.height);
         }
 
         const heroContainer = document.getElementById('hero-container');

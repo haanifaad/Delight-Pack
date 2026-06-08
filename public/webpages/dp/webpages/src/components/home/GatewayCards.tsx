@@ -47,7 +47,7 @@ export function GatewayCards() {
             <div className="p-3 bg-b2b-gray/40 rounded-lg group-hover:bg-b2b-gray/80 transition-colors duration-500">
               <item.icon className="w-6 h-6 text-editorial-white" />
             </div>
-            <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-editorial-white transition-colors duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-editorial-white transition-colors duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1" />
           </div>
           
           <div className="z-10 mt-4">

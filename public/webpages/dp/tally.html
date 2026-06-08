@@ -98,10 +98,10 @@
 
     /* DP Mode (Ultra Premium: Obsidian Black + Glassmorphism + DP Auras) */
     :root, [data-theme="dp"] {
-      --primary: #1D4ED8; 
+      --primary: #123bb5; 
       --primary-light: #3b82f6;
       --primary-dark: #1e3a8a;
-      --secondary: #E11D48;
+      --secondary: #d81b21;
       --background: #050505; /* Obsidian Black */
       --foreground: #fdfdfd;
       --card: rgba(255, 255, 255, 0.02); /* Glassmorphism Base */
@@ -175,7 +175,7 @@
     }
     [data-theme="dp"] .glass-card:hover {
       border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 20px 40px -10px rgba(29, 78, 216, 0.15), 0 0 30px -10px rgba(225, 29, 72, 0.15);
+      box-shadow: 0 20px 40px -10px rgba(29, 78, 216, 0.15), 0 0 30px -10px rgba(216, 27, 33, 0.15);
     }
     
     .icon-accent {
@@ -234,27 +234,23 @@
 <body>
 
   <!-- Ambient DP Aura Glow (Only visible in DP Mode) -->
-  <!-- Ambient Interactive DP Aura Glow (Only visible in DP Mode) -->
-  <div id="dp-aura">
-    <div id="dp-orb-blue" class="fixed top-0 left-0 w-[600px] h-[600px] -ml-[300px] -mt-[300px] bg-[#1D4ED8] rounded-full mix-blend-screen filter blur-[140px] opacity-30 pointer-events-none" style="transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
-    <div id="dp-orb-red" class="fixed top-0 left-0 w-[800px] h-[800px] -ml-[400px] -mt-[400px] bg-[#E11D48] rounded-full mix-blend-screen filter blur-[180px] opacity-20 pointer-events-none" style="transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+  <!-- Ambient Interactive DP Aura Glow (Unified Parallax) -->
+  <div id="dp-aura" class="fixed inset-0 overflow-hidden pointer-events-none z-[-10]">
+    <div id="dp-orb-blue" class="absolute top-[-15%] left-[-10%] w-[800px] h-[800px] bg-[#123bb5] rounded-full mix-blend-screen filter blur-[150px] opacity-30" style="transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+    <div id="dp-orb-red" class="absolute bottom-[-15%] right-[-10%] w-[1000px] h-[1000px] bg-[#d81b21] rounded-full mix-blend-screen filter blur-[200px] opacity-20" style="transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);"></div>
   </div>
   <script>
     document.addEventListener('mousemove', (e) => {
-      // Only track if DP Mode is active to save performance in other modes
       if (document.documentElement.getAttribute('data-theme') !== 'dp') return;
       
       const blueOrb = document.getElementById('dp-orb-blue');
       const redOrb = document.getElementById('dp-orb-red');
       
-      const x = e.clientX;
-      const y = e.clientY;
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
       
-      // Blue orb perfectly centers on the mouse
-      if (blueOrb) blueOrb.style.transform = `translate(${x}px, ${y}px)`;
-      
-      // Red orb trails slightly and offsets to create a stunning blended effect
-      if (redOrb) redOrb.style.transform = `translate(${x + 80}px, ${y + 80}px)`;
+      if (blueOrb) blueOrb.style.transform = `translate(${x * 800}px, ${y * 800}px)`;
+      if (redOrb) redOrb.style.transform = `translate(${x * 650}px, ${y * 650}px)`;
     });
   </script>
     <div id="root"></div>
@@ -667,7 +663,7 @@
   <div id="theme-switcher-container" style="position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;">
     <div class="flex items-center gap-1 p-1 bg-card/80 backdrop-blur-2xl border border-border rounded-full shadow-2xl">
       <button onclick="setTheme('dp')" id="btn-dp" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">
-        <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#1D4ED8] to-[#E11D48] shadow-[0_0_10px_rgba(29,78,216,0.5)]"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-[#123bb5] to-[#d81b21] shadow-[0_0_10px_rgba(29,78,216,0.5)]"></span>
         DP Mode
       </button>
       <button onclick="setTheme('light')" id="btn-light" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all text-muted-foreground hover:text-foreground">

@@ -32,7 +32,7 @@ export function DashboardPage() {
   return (
     <DashboardLayout>
       <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
-        <div className="bg-slate-900 rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="bg-primary rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 pointer-events-none" />
 
           <div className="relative z-10">
@@ -45,7 +45,7 @@ export function DashboardPage() {
             </p>
           </div>
           <div className="relative z-10 flex shrink-0 gap-3">
-            <Button variant="secondary" className="bg-white/10 text-white hover:bg-white/20 border-0">
+            <Button variant="secondary" className="bg-card glass-card backdrop-blur-2xl/10 text-white hover:bg-card glass-card backdrop-blur-2xl/20 border-0">
               Download Report
             </Button>
             <Button className="bg-indigo-500 hover:bg-indigo-600 text-white gap-2">
@@ -87,8 +87,8 @@ export function DashboardPage() {
           </div>
 
           <div className="space-y-8">
-            <div className="rounded-xl border bg-white p-6 shadow-sm">
-              <h3 className="font-semibold text-slate-900 mb-4">Quick Links</h3>
+            <div className="rounded-xl border bg-card glass-card backdrop-blur-2xl p-6 shadow-sm">
+              <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
               <ul className="space-y-3">
                 <li>
                   <a href="#" className="text-sm text-indigo-600 hover:text-indigo-800 font-medium flex items-center justify-between group">
@@ -111,9 +111,9 @@ export function DashboardPage() {
               </ul>
             </div>
 
-            <div className="rounded-xl border bg-slate-50 p-6 shadow-sm">
-              <h3 className="font-semibold text-slate-900 mb-2">Need Assistance?</h3>
-              <p className="text-sm text-slate-500 mb-4">Our dedicated B2B support team is available 24/7.</p>
+            <div className="rounded-xl border bg-background p-6 shadow-sm">
+              <h3 className="font-semibold text-foreground mb-2">Need Assistance?</h3>
+              <p className="text-sm text-muted-foreground mb-4">Our dedicated B2B support team is available 24/7.</p>
               <ContactSupportButton />
             </div>
           </div>
