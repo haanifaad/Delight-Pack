@@ -284,3 +284,4 @@ export const onCustomOrderCompleted = onDocumentUpdated(
 export * from "./demandForecasting";
 export * from "./ticketTriage";
 export * from "./complaintAnalyzer";
+export * as staff from "./staffFunctions";

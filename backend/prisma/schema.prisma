@@ -1,0 +1,175 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email         String   @unique @db.VarChar(255)
+  password_hash String   @db.VarChar(255)
+  role_level    Int
+  profile_data  Json?    @default("{}")
+  created_at    DateTime @default(now()) @db.Timestamptz
+  updated_at    DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  RefreshTokens  RefreshToken[]
+  usages         MaterialUsage[]
+  qa_lists       QAChecklist[]
+  clients        Client[]       @relation("AssignedMember")
+  quotes         Quote[]
+  deals          Deal[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  token      String   @unique @db.VarChar(255)
+  user_id    String   @db.Uuid
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  expires_at DateTime @db.Timestamptz
+  created_at DateTime @default(now()) @db.Timestamptz
+
+  @@map("refresh_tokens")
+}
+
+// --- PHASE 4: Staff Models ---
+
+model Job {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sku         String   @db.VarChar(255)
+  status      String   @default("QUEUED") // QUEUED, PRINTING, DIE_CUT, QA, READY
+  quantity    Int
+  created_at  DateTime @default(now()) @db.Timestamptz
+  updated_at  DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  usages      MaterialUsage[]
+  qa_lists    QAChecklist[]
+
+  @@map("jobs")
+}
+
+model Material {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sku         String   @unique @db.VarChar(255)
+  name        String   @db.VarChar(255)
+  stock_level Float    @default(0.0)
+  unit        String   @db.VarChar(50) // kg, sheets, liters
+  created_at  DateTime @default(now()) @db.Timestamptz
+  updated_at  DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  usages      MaterialUsage[]
+
+  @@map("materials")
+}
+
+model MaterialUsage {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  job_id      String   @db.Uuid
+  material_id String   @db.Uuid
+  user_id     String   @db.Uuid
+  amount_used Float
+  logged_at   DateTime @default(now()) @db.Timestamptz
+
+  job         Job      @relation(fields: [job_id], references: [id], onDelete: Cascade)
+  material    Material @relation(fields: [material_id], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [user_id], references: [id])
+
+  @@map("material_usages")
+}
+
+model QAChecklist {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  job_id      String   @db.Uuid
+  user_id     String   @db.Uuid
+  stage       String   @db.VarChar(50) // PRE_PRESS, PRINTING, DIE_CUT
+  passed      Boolean  @default(false)
+  notes       String?  @db.Text
+  created_at  DateTime @default(now()) @db.Timestamptz
+
+  job         Job      @relation(fields: [job_id], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [user_id], references: [id])
+
+  @@map("qa_checklists")
+}
+
+// --- PHASE 3: Member Models ---
+
+model Client {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  company_name    String   @db.VarChar(255)
+  contact_name    String   @db.VarChar(255)
+  email           String?  @db.VarChar(255)
+  phone           String?  @db.VarChar(50)
+  industry        String?  @db.VarChar(100) // Food, Cosmetics, E-commerce
+  temperature     String   @default("COLD") // COLD, WARM, HOT
+  credit_limit    Float    @default(0)
+  credit_used     Float    @default(0)
+  assigned_to     String?  @db.Uuid
+  assigned_member User?    @relation("AssignedMember", fields: [assigned_to], references: [id])
+  created_at      DateTime @default(now()) @db.Timestamptz
+  updated_at      DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  quotes          Quote[]
+  deals           Deal[]
+
+  @@map("clients")
+}
+
+model Quote {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  client_id     String      @db.Uuid
+  member_id     String      @db.Uuid
+  status        String      @default("DRAFT") // DRAFT, SENT, ACCEPTED, EXPIRED
+  margin_pct    Float       @default(0)
+  subtotal      Float       @default(0)
+  discount_total Float      @default(0)
+  grand_total   Float       @default(0)
+  expires_at    DateTime?   @db.Timestamptz
+  is_rush       Boolean     @default(false)
+  notes         String?     @db.Text
+  created_at    DateTime    @default(now()) @db.Timestamptz
+  updated_at    DateTime    @default(now()) @updatedAt @db.Timestamptz
+
+  client        Client      @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  member        User        @relation(fields: [member_id], references: [id])
+  lines         QuoteLine[]
+
+  @@map("quotes")
+}
+
+model QuoteLine {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  quote_id      String   @db.Uuid
+  sku           String   @db.VarChar(255)
+  description   String   @db.VarChar(500)
+  quantity      Int
+  unit_price    Float
+  discount_pct  Float    @default(0)
+  line_total    Float    @default(0)
+
+  quote         Quote    @relation(fields: [quote_id], references: [id], onDelete: Cascade)
+
+  @@map("quote_lines")
+}
+
+model Deal {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  client_id     String   @db.Uuid
+  member_id     String   @db.Uuid
+  title         String   @db.VarChar(255)
+  value         Float    @default(0)
+  stage         String   @default("PROSPECT") // PROSPECT, QUOTED, NEGOTIATION, WON, LOST
+  expected_close DateTime? @db.Timestamptz
+  lost_reason   String?  @db.VarChar(100) // Price, Lead Time, Competitor
+  created_at    DateTime @default(now()) @db.Timestamptz
+  updated_at    DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  client        Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  member        User     @relation(fields: [member_id], references: [id])
+
+  @@map("deals")
+}

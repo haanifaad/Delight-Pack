@@ -3,16 +3,17 @@ import {
   getAuth,
   setPersistence,
   browserLocalPersistence,
+  inMemoryPersistence,
   type Auth,
 } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "dummy_api_key_for_build",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "dummy.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "dummy-project",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "dummy.appspot.com",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "123456789",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:123456789:web:abcdef",
 };
 
 function assertFirebaseConfig(): void {
@@ -44,6 +45,9 @@ const functions = getFunctions(app);
 
 // Persist sessions in IndexedDB (Firebase default for local persistence).
 // Tokens are managed by the SDK — never store ID tokens in localStorage manually.
-void setPersistence(auth, browserLocalPersistence);
+setPersistence(auth, browserLocalPersistence).catch((err) => {
+  console.warn('Failed to set browser local persistence, falling back to inMemoryPersistence:', err);
+  return setPersistence(auth, inMemoryPersistence);
+});
 
 export { app, auth, storage, functions, assertFirebaseConfig };

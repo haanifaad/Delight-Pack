@@ -1,46 +1,341 @@
 import { useState, useEffect } from 'react';
 import { ShoppingBasket, ChevronUp, ChevronLeft } from 'lucide-react';
 import { ProductCard } from './components/ProductCard';
-import { JarIcon, BottleIcon, PaperRollIcon, StrawsIcon, UmbrellaIcon } from './components/ThreeIcons';
+import { JarIcon, StrawsIcon, UmbrellaIcon, PetJarIcon, WaterBottleIcon, JuiceBottleIcon, MilkBottleIcon, BoxIcon } from './components/ThreeIcons';
 
 const CATEGORIES = [
-  { id: 'jars', name: 'JARS', icon: JarIcon },
-  { id: 'bottles', name: 'BOTTLES', icon: BottleIcon },
-  { id: 'paper', name: 'PAPER ROLLS', icon: PaperRollIcon },
-  { id: 'straws', name: 'STRAWS', icon: StrawsIcon },
-  { id: 'umbrellas', name: 'UMBRELLAS', icon: UmbrellaIcon },
+  { id: 'glass_jars', name: 'GLASS JARS', icon: JarIcon },
+  { id: 'pet_jars', name: 'PET BOTTLES & JARS', icon: PetJarIcon },
+  { id: 'water_bottles', name: 'WATER BOTTLES', icon: WaterBottleIcon },
+  { id: 'juice_bottles', name: 'JUICE BOTTLES', icon: JuiceBottleIcon },
+  { id: 'milk_oil', name: 'MILK & OIL BOTTLES', icon: MilkBottleIcon },
+  { id: 'packings', name: 'BOXES & PACKAGING', icon: BoxIcon },
+  { id: 'cutlery', name: 'CUTLERY & STRAWS', icon: StrawsIcon },
+  { id: 'custom', name: 'CUSTOM PACKINGS', icon: UmbrellaIcon }
 ];
 
 const DEFAULT_PRODUCTS = [
-  { id: '1', category: 'jars', name: 'Set of 2 Mason Jars', price: 12.99, bestseller: true },
-  { id: '2', category: 'jars', name: 'Large Mason Jar 1L', price: 8.99 },
-  { id: '3', category: 'jars', name: 'Mini Spice Jars (6-pack)', price: 15.99 },
-  
-  { id: '4', category: 'bottles', name: 'Clear Glass Bottle 1L', price: 9.99, bestseller: true },
-  { id: '5', category: 'bottles', name: 'Swing Top Bottle 500ml', price: 7.99 },
-  
-  { id: '6', category: 'paper', name: '6-Pack Premium Toilet Roll', price: 5.99, bestseller: true },
-  { id: '7', category: 'paper', name: '12-Pack Family Toilet Roll', price: 10.99 },
-  
-  { id: '8', category: 'straws', name: 'Colorful Plastic Straws (100x)', price: 3.99 },
-  { id: '9', category: 'straws', name: 'Reusable Silicone Straws', price: 6.99, bestseller: true },
-  
-  { id: '10', category: 'umbrellas', name: 'Cocktail Umbrellas (50x)', price: 4.99, bestseller: true },
-  { id: '11', category: 'umbrellas', name: 'Neon Party Umbrellas', price: 5.99 },
+  {
+    "id": "50",
+    "category": "pet_jars",
+    "name": "PET ROUND JAR",
+    "price": 1,
+    "description": "DPPC250 - 120 ml\nDPPC287- 180 ml\nDPPC283 - 300 ml\nDPPC284 - 350 ml\nDPPC285- 400 ml\nDPPC286 - 500 ml\n",
+    "tag": "NEW",
+    "bestseller": true,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_69af9c81e43c06.11390959.png"
+    ]
+  },
+  {
+    "id": "49",
+    "category": "pet_jars",
+    "name": "PET CONSUMER JAR",
+    "price": 1,
+    "description": "DPPC314 - 100 ml\nDPPC317 - 250 ml\nDPPC320 - 500 ml\nDPPC321 - 750 ml\nDPPC322- 1000 ml\nDPPC324 - 2000 ",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_69af9ca8cf3c65.07850182.png"
+    ]
+  },
+  {
+    "id": "48",
+    "category": "water_bottles",
+    "name": "PET BOTTLE",
+    "price": 1,
+    "description": "DPPC310 - 200 ml\nDPPC065 - 250 ml\nDPPC066 - 330 ml\nDPPC067 - 500 ml\nDPPC068- 1000 ml\nDPPC069 - 1500 ",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_69af9cdb950646.07630382.png"
+    ]
+  },
+  {
+    "id": "47",
+    "category": "water_bottles",
+    "name": "ESSENTIAL- BOTTLE",
+    "price": 1,
+    "description": "DGB014 - 15 ml\nDGB015 - 25 ml\nDGB016 - 40 ml\nDGB017 - 50 ml\nDGB018 - 60 ml\nDGB019 - 10 ml\nDGB020 - 2",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_69af9cfc755126.01755144.png"
+    ]
+  },
+  {
+    "id": "46",
+    "category": "water_bottles",
+    "name": "ESSENTIAL BOTTLE",
+    "price": 1,
+    "description": "DGB009 - 15 ml\nDGB010 - 25 ml\nDGB011 - 35 ml\nDGB012 - 50 ml\nDGB013 - 90 ml",
+    "tag": null,
+    "bestseller": true,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_69af9d13d84fa4.24828084.png"
+    ]
+  },
+  {
+    "id": "45",
+    "category": "milk_oil",
+    "name": "OIL BOTTLE",
+    "price": 1,
+    "description": "DGB035 - 250ml\nDGB036 - 500 ml\nDGB037 - 1000 ml",
+    "tag": "NEW",
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_69af9d41064557.46414755.png"
+    ]
+  },
+  {
+    "id": "44",
+    "category": "milk_oil",
+    "name": "FLAT BOTTLE",
+    "price": 1,
+    "description": "DGB023 - 50ml\nDGB024 - 10O ml",
+    "tag": null,
+    "bestseller": false,
+    "images": []
+  },
+  {
+    "id": "43",
+    "category": "juice_bottles",
+    "name": "JUICE BOTTLE -OV",
+    "price": 1,
+    "description": "DGB030 - 1OO ml\nDGB031 - 280 ml\nDGB032 - 350 ml",
+    "tag": null,
+    "bestseller": false,
+    "images": []
+  },
+  {
+    "id": "42",
+    "category": "juice_bottles",
+    "name": "JUICE BOTTLE -NT",
+    "price": 1,
+    "description": "DGB027 - 300 ml\nDGB028 - 330 ml\nDGB029 - 500 ml",
+    "tag": null,
+    "bestseller": true,
+    "images": []
+  },
+  {
+    "id": "41",
+    "category": "water_bottles",
+    "name": "WATER BOTTLE",
+    "price": 1,
+    "description": "DGB033 - 300 ml\nDGB034 - 50O ml",
+    "tag": null,
+    "bestseller": false,
+    "images": []
+  },
+  {
+    "id": "40",
+    "category": "water_bottles",
+    "name": "WATER- BOTTLE",
+    "price": 1,
+    "description": "DGB007 - 250 ml\nDGB008 - 500 ml",
+    "tag": "NEW",
+    "bestseller": false,
+    "images": []
+  },
+  {
+    "id": "39",
+    "category": "juice_bottles",
+    "name": "JUICE BOTTLE",
+    "price": 1,
+    "description": "DGB001 - 80 ml\nDGB002 - 18O ml\nDGB003 - 300 ml",
+    "tag": null,
+    "bestseller": false,
+    "images": []
+  },
+  {
+    "id": "38",
+    "category": "water_bottles",
+    "name": "SWING BOTTLE",
+    "price": 1,
+    "description": "DGB025 - 500 ml\nDGB026 - 1000 ml\nDGB027 - 250 ml",
+    "tag": null,
+    "bestseller": true,
+    "images": []
+  },
+  {
+    "id": "37",
+    "category": "milk_oil",
+    "name": "MILK-BOTTLE",
+    "price": 1,
+    "description": "DGB004 - 200 ml\nDGB005 - 250 ml\nDGB006 - 300 ml",
+    "tag": null,
+    "bestseller": false,
+    "images": []
+  },
+  {
+    "id": "33",
+    "category": "juice_bottles",
+    "name": "ROUND JUICE BOTTLE",
+    "price": 1,
+    "description": "DGB022 - 300 ml\nDGB038 - 250 ml\nDGB039 - 500 ml",
+    "tag": null,
+    "bestseller": false,
+    "images": []
+  },
+  {
+    "id": "32",
+    "category": "packings",
+    "name": "Burger Boxes",
+    "price": 1,
+    "description": "Burger Boxes",
+    "tag": "NEW",
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_6995ac2ae3cd79.07319858.jpeg"
+    ]
+  },
+  {
+    "id": "31",
+    "category": "milk_oil",
+    "name": "Milk Bottle",
+    "price": 1,
+    "description": "Milk Bottle",
+    "tag": null,
+    "bestseller": true,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698f27139f7fa8.06812566.jpeg"
+    ]
+  },
+  {
+    "id": "29",
+    "category": "glass_jars",
+    "name": "Hex Glass Jar",
+    "price": 1,
+    "description": "Hex Glass Jar",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698dda641a6fd9.65559093.jpeg"
+    ]
+  },
+  {
+    "id": "28",
+    "category": "pet_jars",
+    "name": "Glass spice Jar",
+    "price": 1,
+    "description": "Glass spice Jar",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698dd9f7b4fb48.54989859.jpeg"
+    ]
+  },
+  {
+    "id": "27",
+    "category": "glass_jars",
+    "name": "Hex GL Jar",
+    "price": 1,
+    "description": "Hexagonal Jar",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698dd8d5c2b819.83875715.jpeg"
+    ]
+  },
+  {
+    "id": "25",
+    "category": "glass_jars",
+    "name": "Glass Jar",
+    "price": 1,
+    "description": "Glass Jar with Lid ",
+    "tag": "NEW",
+    "bestseller": true,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698dd6dca99c90.16306415.jpeg"
+    ]
+  },
+  {
+    "id": "24",
+    "category": "water_bottles",
+    "name": "Glass swing bottles",
+    "price": 1,
+    "description": "Glass swing bottles",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698dd665c51680.86436112.jpeg"
+    ]
+  },
+  {
+    "id": "23",
+    "category": "pet_jars",
+    "name": "DGJ003-ROUND JAR TWIST LID",
+    "price": 10,
+    "description": "DGJ003-ROUND JAR TWIST LID 100ml 160 /CTN HJ",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698a03f5db54b1.02950324.png"
+    ]
+  },
+  {
+    "id": "22",
+    "category": "pet_jars",
+    "name": "DGJ002-ROUND JAR SRCEW LID",
+    "price": 10,
+    "description": "DGJ002-ROUND JAR SRCEW LID 250ml 105 /CTN HJ",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698a02e888e0c5.92860424.png"
+    ]
+  },
+  {
+    "id": "21",
+    "category": "pet_jars",
+    "name": "DGJ001-ROUND JAR SCREW LID",
+    "price": 10,
+    "description": "DGJ001-ROUND JAR SCREW LID 200ml 96 /CTN HJ",
+    "tag": null,
+    "bestseller": true,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698a018bdba492.38499953.png"
+    ]
+  },
+  {
+    "id": "17",
+    "category": "water_bottles",
+    "name": "Water Bottle (DGB008):",
+    "price": 10,
+    "description": "500ml capacity bottle with a screw lid.",
+    "tag": "NEW",
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_698a0008cf5a92.31747919.png"
+    ]
+  },
+  {
+    "id": "14",
+    "category": "pet_jars",
+    "name": "Round Jars",
+    "price": 10,
+    "description": "Available as general-purpose jars, pickle jars, jam jars, and chocolate jars.",
+    "tag": null,
+    "bestseller": false,
+    "images": [
+      "https://api.delightpackuae.com/uploads/img_6989fbfb569ce2.10921041.png"
+    ]
+  }
 ];
 
 export default function App() {
-  const [activeCategory, setActiveCategory] = useState('jars');
+  const [activeCategory, setActiveCategory] = useState('pet_jars');
   const [activeTab, setActiveTab] = useState('ALL');
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('DP_PRODUCTS');
-    if (saved) {
-      setProducts(JSON.parse(saved));
+    // We append _V3 to the key to force-clear previous cache so new products show up.
+    const savedProducts = localStorage.getItem('DP_PRODUCTS_V5');
+    if (savedProducts) {
+      setProducts(JSON.parse(savedProducts));
     } else {
       setProducts(DEFAULT_PRODUCTS);
-      localStorage.setItem('DP_PRODUCTS', JSON.stringify(DEFAULT_PRODUCTS));
+      localStorage.setItem('DP_PRODUCTS_V5', JSON.stringify(DEFAULT_PRODUCTS));
     }
   }, []);
 
@@ -68,8 +363,14 @@ export default function App() {
           <div className="w-24 h-24 bg-brand text-white font-black flex items-center justify-center text-2xl tracking-tighter rounded-xl">
             STORE
           </div>
-          <a href="/webpages/dp/webpages/src/pages/CustomerPortalPage.tsx" className="text-xs text-brand font-bold text-center hover:underline opacity-80 hover:opacity-100 transition-opacity">
-            Customer Portal<br/>Secure B2B Client Dashboard & Order Tracking
+          <p className="text-xs text-brand font-bold text-center">
+            Customer Portal<br/>Secure B2B Client Dashboard &amp; Order Tracking
+          </p>
+          <a href="../index.html" className="text-[11px] text-gray-500 hover:text-brand font-semibold transition-colors">
+            ← Back to Gateway
+          </a>
+          <a href="../contact/index.html" className="text-[11px] text-gray-500 hover:text-brand font-semibold transition-colors">
+            Contact &amp; Inquiries
           </a>
         </div>
 
@@ -130,17 +431,22 @@ export default function App() {
               
               {/* Highlighted Big Bestseller Card (Takes 2 cols) */}
               {heroProduct && (
-                <div className="col-span-2 row-span-2 bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-yellow-200 overflow-hidden relative group cursor-pointer hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] transition-shadow">
+                <div className="col-span-2 row-span-2 bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-yellow-200 overflow-hidden flex flex-col group cursor-pointer hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] transition-shadow relative">
                   <div className="absolute top-6 left-0 bg-[#c5b358] text-white text-xs font-bold px-4 py-1.5 uppercase tracking-wider z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 90% 100%, 0 100%)' }}>
                     Top Pick
                   </div>
-                  <div className="w-full h-3/4 bg-gradient-to-b from-yellow-50/50 to-white flex items-center justify-center p-8">
-                    {/* Render the 3D icon of the active category as the giant placeholder image */}
-                    <div className="w-64 h-64 pointer-events-none">
-                       <ActiveIcon />
-                    </div>
+                  <div className="flex-1 w-full bg-gradient-to-b from-yellow-50/50 to-white flex items-center justify-center p-8 min-h-[300px]">
+                    {heroProduct.images && heroProduct.images.length > 0 ? (
+                      <img src={heroProduct.images[0]} alt={heroProduct.name} className="w-64 h-64 object-contain filter drop-shadow-md" />
+                    ) : heroProduct.imageUrl ? (
+                      <img src={heroProduct.imageUrl} alt={heroProduct.name} className="w-64 h-64 object-contain filter drop-shadow-md" />
+                    ) : (
+                      <div className="w-64 h-64 pointer-events-none">
+                         <ActiveIcon />
+                      </div>
+                    )}
                   </div>
-                  <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                  <div className="p-6 flex justify-between items-end bg-white z-10 relative">
                     <h3 className="text-xl font-bold text-gray-800">{heroProduct.name}</h3>
                     <div className="bg-brand text-white px-3 py-1 font-black text-xl rounded">
                       {heroProduct.price.toFixed(2)}

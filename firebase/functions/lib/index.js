@@ -36,7 +36,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.onCustomOrderCompleted = exports.completeOrder = exports.getOrderInvoiceStatus = exports.getInvoiceDownloadUrl = exports.submitCustomOrder = void 0;
+exports.staff = exports.onCustomOrderCompleted = exports.completeOrder = exports.getOrderInvoiceStatus = exports.getInvoiceDownloadUrl = exports.submitCustomOrder = void 0;
 const admin = __importStar(require("firebase-admin"));
 const firestore_1 = require("firebase-admin/firestore");
 const https_1 = require("firebase-functions/v2/https");
@@ -265,4 +265,6 @@ exports.onCustomOrderCompleted = (0, firestore_2.onDocumentUpdated)("custom_orde
 });
 __exportStar(require("./demandForecasting"), exports);
 __exportStar(require("./ticketTriage"), exports);
+__exportStar(require("./complaintAnalyzer"), exports);
+exports.staff = __importStar(require("./staffFunctions"));
 //# sourceMappingURL=index.js.map

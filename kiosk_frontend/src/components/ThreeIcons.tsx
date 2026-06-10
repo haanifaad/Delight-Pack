@@ -259,9 +259,144 @@ function Umbrella() {
   );
 }
 
+function PetJar() {
+  const group = useRef<THREE.Group>(null);
+  useFrame(() => {
+    if (group.current) group.current.rotation.y += 0.01;
+  });
+
+  return (
+    <group ref={group}>
+      <mesh position={[0, -0.2, 0]}>
+        <cylinderGeometry args={[0.9, 0.9, 1.8, 32]} />
+        <meshPhysicalMaterial color="#cde3eb" transmission={0.95} opacity={1} transparent roughness={0.05} ior={1.33} thickness={0.2} />
+      </mesh>
+      <mesh position={[0, 0.75, 0]}>
+        <cylinderGeometry args={[0.95, 0.95, 0.2, 32]} />
+        <meshStandardMaterial color="#fca5a5" roughness={0.5} />
+      </mesh>
+    </group>
+  );
+}
+
+function WaterBottle() {
+  const group = useRef<THREE.Group>(null);
+  useFrame(() => {
+    if (group.current) group.current.rotation.y += 0.01;
+  });
+
+  return (
+    <group ref={group}>
+      <mesh position={[0, -0.5, 0]}>
+        <cylinderGeometry args={[0.6, 0.6, 2.0, 32]} />
+        <meshPhysicalMaterial color="#bfdbfe" transmission={0.9} opacity={1} transparent roughness={0.1} ior={1.33} thickness={0.1} />
+      </mesh>
+      <mesh position={[0, 0.75, 0]}>
+        <cylinderGeometry args={[0.2, 0.6, 0.5, 32]} />
+        <meshPhysicalMaterial color="#bfdbfe" transmission={0.9} opacity={1} transparent roughness={0.1} ior={1.33} thickness={0.1} />
+      </mesh>
+      <mesh position={[0, 1.05, 0]}>
+        <cylinderGeometry args={[0.2, 0.2, 0.2, 32]} />
+        <meshPhysicalMaterial color="#bfdbfe" transmission={0.9} opacity={1} transparent roughness={0.1} ior={1.33} thickness={0.1} />
+      </mesh>
+      <mesh position={[0, 1.2, 0]}>
+        <cylinderGeometry args={[0.25, 0.25, 0.1, 32]} />
+        <meshStandardMaterial color="#3b82f6" roughness={0.6} />
+      </mesh>
+    </group>
+  );
+}
+
+function JuiceBottle() {
+  const group = useRef<THREE.Group>(null);
+  useFrame(() => {
+    if (group.current) group.current.rotation.y += 0.01;
+  });
+
+  return (
+    <group ref={group}>
+      <mesh position={[0, -0.3, 0]}>
+        <cylinderGeometry args={[0.7, 0.7, 1.5, 32]} />
+        <meshPhysicalMaterial color="#fcd34d" transmission={0.6} opacity={0.8} transparent roughness={0.2} ior={1.4} thickness={0.5} />
+      </mesh>
+      <mesh position={[0, 0.6, 0]}>
+        <cylinderGeometry args={[0.3, 0.7, 0.3, 32]} />
+        <meshPhysicalMaterial color="#fcd34d" transmission={0.6} opacity={0.8} transparent roughness={0.2} ior={1.4} thickness={0.5} />
+      </mesh>
+      <mesh position={[0, 0.85, 0]}>
+        <cylinderGeometry args={[0.3, 0.3, 0.2, 32]} />
+        <meshPhysicalMaterial color="#fcd34d" transmission={0.6} opacity={0.8} transparent roughness={0.2} ior={1.4} thickness={0.5} />
+      </mesh>
+      <mesh position={[0, 1.0, 0]}>
+        <cylinderGeometry args={[0.35, 0.35, 0.15, 32]} />
+        <meshStandardMaterial color="#f97316" roughness={0.5} />
+      </mesh>
+    </group>
+  );
+}
+
+function MilkBottle() {
+  const group = useRef<THREE.Group>(null);
+  useFrame(() => {
+    if (group.current) group.current.rotation.y += 0.01;
+  });
+
+  return (
+    <group ref={group}>
+      <mesh position={[0, -0.5, 0]}>
+        <cylinderGeometry args={[0.8, 0.8, 1.6, 32]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.3} />
+      </mesh>
+      <mesh position={[0, 0.6, 0]}>
+        <cylinderGeometry args={[0.4, 0.8, 0.6, 32]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.3} />
+      </mesh>
+      <mesh position={[0, 1.0, 0]}>
+        <cylinderGeometry args={[0.4, 0.4, 0.2, 32]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.3} />
+      </mesh>
+      <mesh position={[0, 1.15, 0]}>
+        <cylinderGeometry args={[0.45, 0.45, 0.1, 32]} />
+        <meshStandardMaterial color="#22c55e" roughness={0.5} />
+      </mesh>
+    </group>
+  );
+}
+
+function CardboardBox() {
+  const group = useRef<THREE.Group>(null);
+  useFrame(() => {
+    if (group.current) group.current.rotation.y += 0.01;
+    if (group.current) group.current.rotation.x = Math.PI / 8;
+  });
+
+  return (
+    <group ref={group}>
+      <mesh position={[0, 0, 0]}>
+        <boxGeometry args={[1.5, 1.2, 1.5]} />
+        <meshStandardMaterial color="#d2b48c" roughness={0.9} />
+      </mesh>
+      {/* Box flaps */}
+      <mesh position={[0, 0.6, 0.75]} rotation={[-Math.PI / 4, 0, 0]}>
+        <boxGeometry args={[1.5, 0.75, 0.05]} />
+        <meshStandardMaterial color="#c2a47c" roughness={0.9} />
+      </mesh>
+      <mesh position={[0, 0.6, -0.75]} rotation={[Math.PI / 4, 0, 0]}>
+        <boxGeometry args={[1.5, 0.75, 0.05]} />
+        <meshStandardMaterial color="#c2a47c" roughness={0.9} />
+      </mesh>
+    </group>
+  );
+}
+
 // Exports
 export const JarIcon = () => <IconWrapper><Jar /></IconWrapper>;
 export const BottleIcon = () => <IconWrapper><Bottle /></IconWrapper>;
 export const PaperRollIcon = () => <IconWrapper><PaperRoll /></IconWrapper>;
 export const StrawsIcon = () => <IconWrapper><Straws /></IconWrapper>;
 export const UmbrellaIcon = () => <IconWrapper><Umbrella /></IconWrapper>;
+export const PetJarIcon = () => <IconWrapper><PetJar /></IconWrapper>;
+export const WaterBottleIcon = () => <IconWrapper><WaterBottle /></IconWrapper>;
+export const JuiceBottleIcon = () => <IconWrapper><JuiceBottle /></IconWrapper>;
+export const MilkBottleIcon = () => <IconWrapper><MilkBottle /></IconWrapper>;
+export const BoxIcon = () => <IconWrapper><CardboardBox /></IconWrapper>;

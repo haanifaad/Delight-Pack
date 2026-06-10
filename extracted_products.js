@@ -1,0 +1,251 @@
+const CATEGORIES = [
+  {
+    "id": "uncategorized",
+    "name": "Uncategorized"
+  }
+];
+const DEFAULT_PRODUCTS = [
+  {
+    "id": "50",
+    "category": "uncategorized",
+    "name": "PET ROUND JAR",
+    "price": 1,
+    "description": "DPPC250 - 120 ml\nDPPC287- 180 ml\nDPPC283 - 300 ml\nDPPC284 - 350 ml\nDPPC285- 400 ml\nDPPC286 - 500 ml\n",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "49",
+    "category": "uncategorized",
+    "name": "PET CONSUMER JAR",
+    "price": 1,
+    "description": "DPPC314 - 100 ml\nDPPC317 - 250 ml\nDPPC320 - 500 ml\nDPPC321 - 750 ml\nDPPC322- 1000 ml\nDPPC324 - 2000 ",
+    "tag": null,
+    "bestseller": true
+  },
+  {
+    "id": "48",
+    "category": "uncategorized",
+    "name": "PET BOTTLE",
+    "price": 1,
+    "description": "DPPC310 - 200 ml\nDPPC065 - 250 ml\nDPPC066 - 330 ml\nDPPC067 - 500 ml\nDPPC068- 1000 ml\nDPPC069 - 1500 ",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "47",
+    "category": "uncategorized",
+    "name": "ESSENTIAL- BOTTLE",
+    "price": 1,
+    "description": "DGB014 - 15 ml\nDGB015 - 25 ml\nDGB016 - 40 ml\nDGB017 - 50 ml\nDGB018 - 60 ml\nDGB019 - 10 ml\nDGB020 - 2",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "46",
+    "category": "uncategorized",
+    "name": "ESSENTIAL BOTTLE",
+    "price": 1,
+    "description": "DGB009 - 15 ml\nDGB010 - 25 ml\nDGB011 - 35 ml\nDGB012 - 50 ml\nDGB013 - 90 ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "45",
+    "category": "uncategorized",
+    "name": "OIL BOTTLE",
+    "price": 1,
+    "description": "DGB035 - 250ml\nDGB036 - 500 ml\nDGB037 - 1000 ml",
+    "tag": null,
+    "bestseller": true
+  },
+  {
+    "id": "44",
+    "category": "uncategorized",
+    "name": "FLAT BOTTLE",
+    "price": 1,
+    "description": "DGB023 - 50ml\nDGB024 - 10O ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "43",
+    "category": "uncategorized",
+    "name": "JUICE BOTTLE -OV",
+    "price": 1,
+    "description": "DGB030 - 1OO ml\nDGB031 - 280 ml\nDGB032 - 350 ml",
+    "tag": null,
+    "bestseller": true
+  },
+  {
+    "id": "42",
+    "category": "uncategorized",
+    "name": "JUICE BOTTLE -NT",
+    "price": 1,
+    "description": "DGB027 - 300 ml\nDGB028 - 330 ml\nDGB029 - 500 ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "41",
+    "category": "uncategorized",
+    "name": "WATER BOTTLE",
+    "price": 1,
+    "description": "DGB033 - 300 ml\nDGB034 - 50O ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "40",
+    "category": "uncategorized",
+    "name": "WATER- BOTTLE",
+    "price": 1,
+    "description": "DGB007 - 250 ml\nDGB008 - 500 ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "39",
+    "category": "uncategorized",
+    "name": "JUICE BOTTLE",
+    "price": 1,
+    "description": "DGB001 - 80 ml\nDGB002 - 18O ml\nDGB003 - 300 ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "38",
+    "category": "uncategorized",
+    "name": "SWING BOTTLE",
+    "price": 1,
+    "description": "DGB025 - 500 ml\nDGB026 - 1000 ml\nDGB027 - 250 ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "37",
+    "category": "uncategorized",
+    "name": "MILK-BOTTLE",
+    "price": 1,
+    "description": "DGB004 - 200 ml\nDGB005 - 250 ml\nDGB006 - 300 ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "33",
+    "category": "uncategorized",
+    "name": "ROUND JUICE BOTTLE",
+    "price": 1,
+    "description": "DGB022 - 300 ml\nDGB038 - 250 ml\nDGB039 - 500 ml",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "32",
+    "category": "uncategorized",
+    "name": "Burger Boxes",
+    "price": 1,
+    "description": "Burger Boxes",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "31",
+    "category": "uncategorized",
+    "name": "Milk Bottle",
+    "price": 1,
+    "description": "Milk Bottle",
+    "tag": null,
+    "bestseller": true
+  },
+  {
+    "id": "29",
+    "category": "uncategorized",
+    "name": "Hex Glass Jar",
+    "price": 1,
+    "description": "Hex Glass Jar",
+    "tag": null,
+    "bestseller": true
+  },
+  {
+    "id": "28",
+    "category": "uncategorized",
+    "name": "Glass spice Jar",
+    "price": 1,
+    "description": "Glass spice Jar",
+    "tag": null,
+    "bestseller": true
+  },
+  {
+    "id": "27",
+    "category": "uncategorized",
+    "name": "Hex GL Jar",
+    "price": 1,
+    "description": "Hexagonal Jar",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "25",
+    "category": "uncategorized",
+    "name": "Glass Jar",
+    "price": 1,
+    "description": "Glass Jar with Lid ",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "24",
+    "category": "uncategorized",
+    "name": "Glass swing bottles",
+    "price": 1,
+    "description": "Glass swing bottles",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "23",
+    "category": "uncategorized",
+    "name": "DGJ003-ROUND JAR TWIST LID",
+    "price": 10,
+    "description": "DGJ003-ROUND JAR TWIST LID 100ml 160 /CTN HJ",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "22",
+    "category": "uncategorized",
+    "name": "DGJ002-ROUND JAR SRCEW LID",
+    "price": 10,
+    "description": "DGJ002-ROUND JAR SRCEW LID 250ml 105 /CTN HJ",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "21",
+    "category": "uncategorized",
+    "name": "DGJ001-ROUND JAR SCREW LID",
+    "price": 10,
+    "description": "DGJ001-ROUND JAR SCREW LID 200ml 96 /CTN HJ",
+    "tag": null,
+    "bestseller": true
+  },
+  {
+    "id": "17",
+    "category": "uncategorized",
+    "name": "Water Bottle (DGB008):",
+    "price": 10,
+    "description": "500ml capacity bottle with a screw lid.",
+    "tag": null,
+    "bestseller": false
+  },
+  {
+    "id": "14",
+    "category": "uncategorized",
+    "name": "Round Jars",
+    "price": 10,
+    "description": "Available as general-purpose jars, pickle jars, jam jars, and chocolate jars.",
+    "tag": null,
+    "bestseller": false
+  }
+];

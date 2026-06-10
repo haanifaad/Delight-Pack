@@ -11,7 +11,7 @@ export default defineConfig({
     viteSingleFile()
   ],
   build: {
-    outDir: '../public/app',
+    outDir: '../public/kiosk',
     emptyOutDir: false,
   }
 })

@@ -42,12 +42,79 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
+    match /shift_logs/{document} {
+      allow read, write: if isL3Staff();
+    }
+    
+    // --- Phase 4 & 5 Collections ---
+    match /maintenance_orders/{document} {
+      allow read, write: if isL3Staff();
+    }
+    match /rmas/{document} {
+      allow read, write: if isL3Staff();
+    }
+    match /inventory_variances/{document} {
+      allow read, write: if isL3Staff();
+    }
+    match /quarantine_logs/{document} {
+      allow read, write: if isL3Staff();
+    }
+    match /ink_mixing_logs/{document} {
+      allow read, write: if isL3Staff();
+    }
+    
+    // --- Phase 6 & 7 Collections ---
+    match /gate_passes/{document} {
+      allow read, write: if isL3Staff();
+    }
+    match /incident_reports/{document} {
+      allow read, write: if isL3Staff();
+    }
+    match /shift_swaps/{document} {
+      allow read, write: if isL3Staff();
+    }
+    
+    // --- Phase 9 & 10 Collections ---
+    match /quality_audits/{document} {
+      allow read, write: if isL3Staff();
+    }
+    match /eco_metrics/{document} {
+      allow read, write: if isL3Staff();
+    }
+    
+    // Fallback for everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
     match /spreadsheetData/{docId} {
       allow read, write: if true;
     }
 
     match /products/{docId} {
       allow read, write: if true;
+    }
+
+    // Staff (L3) Collections
+    match /raw_materials/{docId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.auth.token.role == 'staff' || request.auth.token.isAdmin == true);
+    }
+    match /material_logs/{docId} {
+      allow read, write: if request.auth != null && (request.auth.token.role == 'staff' || request.auth.token.isAdmin == true);
+    }
+    match /production_orders/{docId} {
+      allow read, write: if request.auth != null && (request.auth.token.role == 'staff' || request.auth.token.isAdmin == true);
+    }
+    match /machines/{docId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.auth.token.role == 'staff' || request.auth.token.isAdmin == true);
+    }
+    match /shift_logs/{docId} {
+      allow read, write: if request.auth != null && (request.auth.token.role == 'staff' || request.auth.token.isAdmin == true);
+    }
+    match /dispatch_drivers/{docId} {
+      allow read, write: if request.auth != null && (request.auth.token.role == 'staff' || request.auth.token.isAdmin == true);
     }
   }
 }

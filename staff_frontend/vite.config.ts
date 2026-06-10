@@ -11,7 +11,7 @@ export default defineConfig({
     viteSingleFile()
   ],
   build: {
-    outDir: '../public/staff',
-    emptyOutDir: false,
+    outDir: '../public/staff/admin',
+    emptyOutDir: true,
   }
 })

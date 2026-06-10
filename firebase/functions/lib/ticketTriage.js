@@ -38,7 +38,6 @@ const firestore_1 = require("firebase-functions/v2/firestore");
 const admin = __importStar(require("firebase-admin"));
 const genai_1 = require("@google/genai");
 const ai = new genai_1.GoogleGenAI({});
-const db = admin.firestore();
 const triageSchema = {
     type: genai_1.Type.OBJECT,
     properties: {

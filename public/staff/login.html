@@ -169,7 +169,7 @@
         setTimeout(() => {
           // Look for redirect param, otherwise default to staff index
           const params = new URLSearchParams(window.location.search);
-          const redirect = params.get('redirect') || '/staff/index.html';
+          const redirect = params.get('redirect') || './spreadsheet.html';
           window.location.href = redirect;
         }, 800);
       }

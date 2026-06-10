@@ -1,0 +1,152 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #0f1115; /* Deep Charcoal */
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+.header {
+  padding: 24px;
+  background: rgba(15, 17, 21, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1e2229;
+  z-index: 10;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.gridWrapper {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+.gridTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #14171d;
+  border: 1px solid #232832;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.gridTable th {
+  background: #1b1e25;
+  color: #94a3b8;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #232832;
+  user-select: none;
+}
+
+.gridTable td {
+  padding: 0;
+  border-bottom: 1px solid #1e2229;
+  border-right: 1px solid #1e2229;
+  position: relative;
+  height: 48px; /* Tally Prime high velocity size */
+}
+
+.gridTable td:last-child {
+  border-right: none;
+}
+
+.gridTable tr:last-child td {
+  border-bottom: none;
+}
+
+/* Row Hover */
+.gridTable tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 0.875rem;
+  color: #e2e8f0;
+  box-sizing: border-box;
+  cursor: text;
+  transition: background-color 0.1s ease;
+}
+
+/* Active Cell (Focus Ring) */
+.cellActive {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid #f59e0b; /* Vibrant Amber */
+  background: rgba(245, 158, 11, 0.1);
+  z-index: 2;
+  pointer-events: none;
+  animation: pulseRing 1.5s infinite alternate;
+}
+
+@keyframes pulseRing {
+  0% { box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.2); }
+  100% { box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.5); }
+}
+
+.cellInput {
+  width: 100%;
+  height: 100%;
+  background: #f59e0b;
+  color: #0f1115;
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 0 16px;
+  box-sizing: border-box;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+}
+
+/* Command Bar */
+.commandBar {
+  background: #1b1e25;
+  border-top: 1px solid #232832;
+  padding: 12px 24px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.commandItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.hotkey {
+  background: #2a303c;
+  color: #cbd5e1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  border: 1px solid #333a47;
+  box-shadow: 0 2px 0 #14171d;
+}

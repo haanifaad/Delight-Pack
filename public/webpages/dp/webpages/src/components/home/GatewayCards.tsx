@@ -7,7 +7,7 @@ const GATEWAYS = [
     title: 'Customer Portal',
     description: 'Secure B2B Client Dashboard & Order Tracking',
     icon: Shield,
-    path: '/login'
+    path: '/portal'
   },
   {
     id: 'products',

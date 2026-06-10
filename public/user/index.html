@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delight Pack - Client Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="../index.html" class="logo">
+      Delight<span>Pack</span>
+    </a>
+    <nav class="nav">
+      <a href="#" class="nav-item active">Dashboard</a>
+      <a href="#" class="nav-item">Order History</a>
+      <a href="#" class="nav-item">Invoices</a>
+      <a href="#" class="nav-item">Support Chat</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="header">
+      <div class="user-profile">
+        <span>Acme Corp</span>
+        <div class="avatar">A</div>
+      </div>
+    </header>
+
+    <div class="content-body">
+      <h1 class="page-title">Welcome back, Acme Corp.</h1>
+      <p class="page-subtitle">Track your active packaging runs and generate instant quotes.</p>
+
+      <!-- Pizza Tracker Component -->
+      <div class="tracker-container">
+        <h2 class="tracker-title">Live Order Progress (PO-8824)</h2>
+        <div class="stages-wrapper">
+          <div class="stages-line"></div>
+          <div class="stages-progress"></div>
+          
+          <div class="stage">
+            <div class="stage-circle">1</div>
+            <div class="stage-label">Pre-Press</div>
+          </div>
+          <div class="stage">
+            <div class="stage-circle">2</div>
+            <div class="stage-label">Printing</div>
+          </div>
+          <div class="stage">
+            <div class="stage-circle">3</div>
+            <div class="stage-label">Die-Cut</div>
+          </div>
+          <div class="stage">
+            <div class="stage-circle">4</div>
+            <div class="stage-label">Shipped</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Smart Quoting Calculator Component -->
+      <div class="calc-container">
+        <div class="calc-form">
+          <h2>Smart Quoting Calculator</h2>
+          
+          <div class="input-row">
+            <div class="input-group">
+              <label for="calc-length">Length (mm)</label>
+              <input type="number" id="calc-length" class="input-field" value="200">
+            </div>
+            <div class="input-group">
+              <label for="calc-width">Width (mm)</label>
+              <input type="number" id="calc-width" class="input-field" value="150">
+            </div>
+            <div class="input-group">
+              <label for="calc-height">Height (mm)</label>
+              <input type="number" id="calc-height" class="input-field" value="50">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label for="calc-material">Material</label>
+              <select id="calc-material" class="input-field">
+                <option value="kraft">Recycled Kraft</option>
+                <option value="glossy">Premium Glossy</option>
+                <option value="matte">Soft-touch Matte</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="calc-qty">Quantity</label>
+              <input type="number" id="calc-qty" class="input-field" value="1000" step="500">
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-result">
+          <div class="result-label">Estimated Total</div>
+          <div class="result-value" id="calc-result-value">AED 0.00</div>
+          <button class="quote-btn">Save as Draft Quote</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

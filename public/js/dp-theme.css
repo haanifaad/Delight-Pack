@@ -1,0 +1,172 @@
+/* Delight Pack shared theme — gateway, contact, B2B cart */
+:root,
+[data-theme="dp"] {
+  --primary: #1d4ed8;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e3a8a;
+  --secondary: #e11d48;
+  --background: #050505;
+  --foreground: #fdfdfd;
+  --card: rgba(255, 255, 255, 0.02);
+  --card-hover: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.08);
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: #94a3b8;
+  --accent: #fdfdfd;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --primary: #0f172a;
+  --primary-light: #334155;
+  --primary-dark: #020617;
+  --secondary: #475569;
+  --background: #ffffff;
+  --foreground: #1e293b;
+  --card: #f8fafc;
+  --card-hover: #f1f5f9;
+  --border: #cbd5e1;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0f172a;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --primary: #ffffff;
+  --primary-light: #f1f5f9;
+  --primary-dark: #cbd5e1;
+  --secondary: #94a3b8;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-hover: #111111;
+  --border: #1c1c1c;
+  --muted: #1c1c1c;
+  --muted-foreground: #a3a3a3;
+  --accent: #ffffff;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+#dp-aura {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+[data-theme="dp"] #dp-aura {
+  display: block;
+}
+
+#dp-orb-blue,
+#dp-orb-red {
+  position: absolute;
+  border-radius: 9999px;
+  mix-blend-mode: screen;
+  filter: blur(150px);
+  will-change: transform;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#dp-orb-blue {
+  top: -15%;
+  left: -10%;
+  width: 800px;
+  height: 800px;
+  background: #1d4ed8;
+  opacity: 0.35;
+}
+
+#dp-orb-red {
+  bottom: -15%;
+  right: -10%;
+  width: 1000px;
+  height: 1000px;
+  background: #e11d48;
+  opacity: 0.25;
+  filter: blur(200px);
+  transition-duration: 0.5s;
+}
+
+.glass-card {
+  border: 1px solid var(--border);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gateway-card:hover {
+  background-color: var(--card-hover);
+}
+
+[data-theme="dp"] .glass-card:hover,
+[data-theme="dp"] .gateway-card:hover,
+[data-theme="dp"] .contact-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px -10px rgba(29, 78, 216, 0.15), 0 0 30px -10px rgba(225, 29, 72, 0.15);
+}
+
+#dp-theme-switcher {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+}
+
+#dp-theme-switcher .dp-switcher-inner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+#dp-theme-switcher button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted-foreground);
+  transition: all 0.2s ease;
+}
+
+#dp-theme-switcher button:hover {
+  color: var(--foreground);
+}
+
+#dp-theme-switcher button.active {
+  background: var(--card-hover);
+  color: var(--foreground);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+#dp-theme-switcher .dp-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #1d4ed8, #e11d48);
+  box-shadow: 0 0 10px rgba(29, 78, 216, 0.5);
+}
+
+.dp-page-content {
+  position: relative;
+  z-index: 1;
+}

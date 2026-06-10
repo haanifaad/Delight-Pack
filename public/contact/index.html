@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Inquiries - Delight Pack</title>
+  <link rel="stylesheet" href="../js/dp-theme.css">
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">
+    @theme {
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-border: var(--border);
+      --color-muted-foreground: var(--muted-foreground);
+      --font-sans: 'Inter', sans-serif;
+    }
+    .contact-card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      backdrop-filter: blur(24px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact-card:hover {
+      background-color: var(--card-hover);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="min-h-screen dp-page-content">
+  <div id="dp-aura"><div id="dp-orb-blue"></div><div id="dp-orb-red"></div></div>
+
+  <div class="p-6 md:p-12 max-w-4xl mx-auto">
+    <a href="../index.html" class="text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 inline-flex items-center gap-2">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Gateway
+    </a>
+
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-3">Contact &amp; Inquiries</h1>
+    <p class="text-lg text-muted-foreground font-light mb-12">Direct Dubai Workspace Location &amp; WhatsApp Integration</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="contact-card glass-card rounded-2xl p-8">
+        <i data-lucide="map-pin" class="w-8 h-8 text-[var(--primary)] mb-4"></i>
+        <h2 class="text-xl font-semibold text-foreground mb-2">Dubai Workspace</h2>
+        <p class="text-muted-foreground text-sm leading-relaxed">Delight Pack Factory Floor<br/>Dubai, United Arab Emirates</p>
+      </div>
+      <a href="https://wa.me/971559610972" target="_blank" rel="noopener" class="contact-card glass-card rounded-2xl p-8 block">
+        <i data-lucide="message-circle" class="w-8 h-8 text-emerald-400 mb-4"></i>
+        <h2 class="text-xl font-semibold text-foreground mb-2">WhatsApp</h2>
+        <p class="text-muted-foreground text-sm">+971 55 961 0972<br/>Tap to open chat</p>
+      </a>
+      <a href="tel:+971559610972" class="contact-card glass-card rounded-2xl p-8 block">
+        <i data-lucide="phone" class="w-8 h-8 text-[var(--primary)] mb-4"></i>
+        <h2 class="text-xl font-semibold text-foreground mb-2">Phone</h2>
+        <p class="text-muted-foreground text-sm">+971 55 961 0972</p>
+      </a>
+      <a href="mailto:info@delightpack.com" class="contact-card glass-card rounded-2xl p-8 block">
+        <i data-lucide="mail" class="w-8 h-8 text-[var(--primary)] mb-4"></i>
+        <h2 class="text-xl font-semibold text-foreground mb-2">Email</h2>
+        <p class="text-muted-foreground text-sm">info@delightpack.com</p>
+      </a>
+    </div>
+  </div>
+
+  <script>lucide.createIcons();</script>
+  <script src="../js/dp-theme.js"></script>
+</body>
+</html>

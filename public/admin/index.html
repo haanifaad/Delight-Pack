@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delight Pack - L4 Command Center</title>
+  <link rel="stylesheet" href="css/admin-theme.css">
+</head>
+<body>
+  <div id="auth-guard-overlay" class="fullscreen-overlay active">
+    <h1>Authenticating...</h1>
+  </div>
+
+  <div class="admin-layout" style="display: none;" id="main-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>DP Admin</h2>
+        <span class="badge">L4 Access</span>
+      </div>
+      <nav>
+        <ul id="nav-list">
+          <li data-module="dashboard" class="active">Executive Dashboard</li>
+          <li data-module="users">User Management</li>
+          <li data-module="pricing">Pricing Strategy</li>
+          <li data-module="finance">Financial Controls</li>
+          <li>Supply Chain</li>
+        </ul>
+      </nav>
+      <button id="logout-btn" class="btn btn-danger">Emergency Logout</button>
+    </aside>
+
+    <main class="content-area">
+      <header class="topbar">
+        <h1 id="page-title">Executive Dashboard</h1>
+        <div class="system-status">
+          <span class="status-dot green"></span> Factory Floor Active
+        </div>
+      </header>
+
+      <div id="module-container" class="module-view">
+        <!-- JS will inject module contents here -->
+      </div>
+    </main>
+  </div>
+
+  <script src="js/admin-core.js"></script>
+  <script src="js/modules/dashboard.js"></script>
+  <script src="js/modules/users.js"></script>
+  <script src="js/modules/pricing.js"></script>
+  <script src="js/modules/finance.js"></script>
+</body>
+</html>
